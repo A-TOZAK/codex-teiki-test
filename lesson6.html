@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>番外編 保健の期末テストと指導要領の根拠｜Codexで作る 中学校の定期テスト</title>
+<meta name="description" content="体育科の先生からの相談で作った番外編。中学2年 保健分野の期末テストを、各問題に学習指導要領のどこに基づくかを明記した形でCodexに作らせる。一次資料をフォルダに置く型と、対応表の照合まで。">
+<style>
+  :root { --ink:#15181c; --sub:#6b7077; --accent:#2b5fd9; --paper:#fff; --wash:#f6f6f4; --line:#e6e6e3; --black:#0e0f11; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP","Yu Gothic Medium",sans-serif; background:var(--paper); color:var(--ink); line-height:2.0; letter-spacing:0.02em; -webkit-font-smoothing:antialiased; }
+  a { color:var(--accent); text-decoration:none; }
+  .topbar { background:var(--black); color:#fff; position:sticky; top:0; z-index:40; }
+  .topbar-in { max-width:720px; margin:0 auto; padding:13px 24px; display:flex; justify-content:space-between; align-items:center; gap:14px; }
+  .wordmark { font-size:12.5px; font-weight:700; letter-spacing:0.28em; color:#fff; white-space:nowrap; }
+  .topbar-in a.home { font-size:11.5px; color:#b9bcc2; letter-spacing:0.1em; white-space:nowrap; }
+  .topbar-in a.home:hover { color:#fff; }
+  @media (max-width:430px){ .topbar-in .hp { display:none; } }
+  .lhead { border-bottom:1px solid var(--ink); background:#fdfdfb; }
+  .lhead-in { max-width:720px; margin:0 auto; padding:48px 24px 40px; }
+  .lnum { font-family:Georgia,serif; font-style:italic; font-size:44px; font-weight:700; color:var(--accent); line-height:1; }
+  .llabel { font-size:11.5px; font-weight:700; letter-spacing:0.22em; color:var(--sub); margin:10px 0 8px; }
+  h1 { font-size:clamp(23px,4vw,30px); font-weight:700; line-height:1.5; word-break:auto-phrase; text-wrap:pretty; }
+  .lead { font-size:14.5px; color:#3d4148; margin-top:14px; max-width:600px; }
+  article { max-width:720px; margin:0 auto; padding:8px 24px 64px; }
+  .sec-head { display:flex; align-items:baseline; gap:13px; margin:52px 0 6px; }
+  .sec-head .sn { font-family:Georgia,serif; font-style:italic; font-size:19px; font-weight:700; color:var(--accent); }
+  h2 { font-size:20px; font-weight:700; margin:0 0 16px; word-break:auto-phrase; }
+  h3 { font-size:15.5px; font-weight:700; margin:28px 0 8px; word-break:auto-phrase; }
+  p { font-size:15px; margin-bottom:16px; }
+  .talk { display:flex; gap:13px; margin:20px 0; align-items:flex-start; }
+  .talk .av { flex:0 0 56px; text-align:center; }
+  .talk .av img { width:56px; height:56px; clip-path:circle(50%); display:block; }
+  .talk .av .nm { font-size:10px; color:var(--sub); margin-top:3px; white-space:nowrap; }
+  .talk .bub { position:relative; border:1px solid var(--ink); background:var(--paper); padding:12px 17px; font-size:14.5px; line-height:1.9; margin-top:4px; }
+  .talk .bub::before { content:""; position:absolute; top:18px; left:-8px; width:14px; height:14px; background:inherit; border-left:1px solid var(--ink); border-bottom:1px solid var(--ink); transform:rotate(45deg); }
+  .talk.r { flex-direction:row-reverse; }
+  .talk.r .bub { background:var(--wash); }
+  .talk.r .bub::before { left:auto; right:-8px; border:none; border-right:1px solid var(--ink); border-top:1px solid var(--ink); transform:rotate(45deg); }
+  .fig { border:1px solid var(--line); margin:24px 0; }
+  .fig img { display:block; width:100%; height:auto; }
+  .fig figcaption { font-size:12px; color:var(--sub); padding:9px 14px; border-top:1px solid var(--line); line-height:1.7; }
+  ol.steps { margin:0 0 16px 0; padding-left:0; list-style:none; counter-reset:step; }
+  ol.steps li { position:relative; padding:0 0 14px 44px; counter-increment:step; font-size:14.5px; }
+  ol.steps li::before { content:counter(step); position:absolute; left:0; top:4px; width:28px; height:28px; border:1px solid var(--ink); display:flex; align-items:center; justify-content:center; font-family:Georgia,serif; font-style:italic; font-weight:700; font-size:14px; color:var(--accent); }
+  .note { border-left:3px solid var(--accent); background:var(--wash); padding:16px 20px; font-size:13.5px; line-height:1.9; margin:20px 0; }
+  .warn { border-left:3px solid var(--black); background:var(--wash); padding:16px 20px; font-size:13.5px; line-height:1.9; margin:20px 0; }
+  .warn b { display:block; font-size:11px; letter-spacing:0.2em; color:var(--sub); margin-bottom:6px; }
+  .prompt { border:1px solid var(--ink); margin:20px 0; }
+  .prompt .pt { display:block; font-size:10.5px; font-weight:700; letter-spacing:0.16em; color:#fff; background:var(--black); padding:6px 16px; }
+  .prompt .pbody { padding:16px 20px; font-size:14.5px; line-height:1.95; background:var(--wash); white-space:pre-wrap; margin:0; }
+  .prompt .pbody p { font-size:14.5px; line-height:1.95; margin:0; }
+  .prompt .pbody p.sp { height:12px; }
+  .prompt .pbody p.bul { padding-left:1em; text-indent:-1em; }
+  .prompt .pbody p.bul::before { content:"・"; }
+  .prompt .pafter { padding:12px 20px 14px; font-size:13px; color:#3d4148; border-top:1px solid var(--line); line-height:1.85; margin:0; }
+  .prompt .pafter b { font-size:10.5px; font-weight:700; letter-spacing:0.16em; color:var(--sub); display:block; margin-bottom:4px; }
+  .memo { border:1px solid var(--ink); margin:20px 0; }
+  .memo .mt { display:block; font-size:10.5px; font-weight:700; letter-spacing:0.16em; color:var(--sub); background:var(--wash); padding:6px 16px; border-bottom:1px solid var(--line); }
+  .memo pre { padding:16px 20px; font-family:inherit; font-size:14px; line-height:1.9; white-space:pre-wrap; }
+  .memo .mlines { padding:16px 20px; }
+  .memo .mlines p { font-size:14px; line-height:1.9; margin:0; }
+  .memo .mlines p.sp { height:14px; }
+  .memo .mlines p.bul { padding-left:1em; text-indent:-1em; }
+  .memo .mlines p.bul::before { content:"・"; }
+  .reply { border:1px solid var(--line); background:#fdfdfb; margin:20px 0; }
+  .reply .rt { display:block; font-size:10.5px; font-weight:700; letter-spacing:0.16em; color:var(--sub); padding:6px 16px; border-bottom:1px solid var(--line); }
+  .reply .rbody { padding:14px 20px; font-size:13.5px; line-height:1.9; color:#3d4148; }
+  .reply .rbody p { font-size:13.5px; margin-bottom:8px; }
+  .reply .rbody ul { padding-left:20px; margin-bottom:8px; }
+  .reply .rbody li { font-size:13.5px; }
+  .terms { border:1px solid var(--ink); margin:20px 0; }
+  .term { display:flex; border-bottom:1px solid var(--line); }
+  .term:last-child { border-bottom:none; }
+  .term dt { flex:0 0 152px; padding:14px 16px; font-size:13.5px; font-weight:700; background:var(--wash); border-right:1px solid var(--line); word-break:auto-phrase; }
+  .term dd { flex:1; padding:14px 18px; font-size:13.5px; line-height:1.85; color:#3d4148; word-break:auto-phrase; }
+  @media (max-width:520px){ .term { flex-direction:column; } .term dt { border-right:none; border-bottom:1px solid var(--line); flex-basis:auto; } }
+  .try { border:1px solid var(--ink); background:var(--wash); padding:20px 22px 16px; margin:44px 0 0; }
+  .try .tt { font-size:11px; font-weight:700; letter-spacing:0.2em; color:#fff; background:var(--black); display:inline-block; padding:3px 10px; margin-bottom:10px; }
+  .try p { font-size:14px; margin-bottom:6px; }
+  .pn { display:flex; justify-content:space-between; gap:14px; border-top:1px solid var(--ink); margin-top:56px; padding-top:20px; }
+  .pn a { font-size:13px; font-weight:700; word-break:auto-phrase; }
+  .pn .prev::before { content:"← "; }
+  .pn .next::after { content:" →"; }
+  footer { border-top:1px solid var(--line); }
+  .foot-in { max-width:720px; margin:0 auto; padding:22px 24px; display:flex; justify-content:space-between; gap:14px; font-size:11.5px; color:var(--sub); }
+  table.alloc { border-collapse:collapse; width:100%; margin:20px 0; font-size:13.5px; }
+  table.alloc th, table.alloc td { border:1px solid var(--line); padding:9px 12px; text-align:left; vertical-align:top; line-height:1.7; }
+  table.alloc th { background:var(--wash); font-weight:700; white-space:nowrap; }
+  .tw { overflow-x:auto; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-in">
+    <span class="wordmark">SCHOOL STOCK</span>
+    <a class="home" href="index.html"><span class="hp">CODEX FOR TEACHERS ─ </span>目次へ</a>
+  </div>
+</div>
+
+<div class="lhead">
+  <div class="lhead-in">
+    <div class="lnum">+</div>
+    <div class="llabel">EXTRA</div>
+    <h1>番外編 保健の期末テストと指導要領の根拠</h1>
+    <p class="lead">体育科の先生からの相談で作った回です。保健分野の期末テストを、各問題に「学習指導要領のどこに基づくか」を明記した形で作らせます。第3回と同じく、頼んだ原文からできあがったものまで1本まるごとです。約15分です。</p>
+  </div>
+</div>
+
+<article>
+
+  <div class="sec-head"><span class="sn">1</span></div>
+  <h2>相談の中身</h2>
+
+  <div class="talk">
+    <div class="av"><img src="assets/icon-tozaki.png" alt="とざき先生"><div class="nm">とざき先生</div></div>
+    <div class="bub">この講座のもとになった相談は、実は体育科の先生からでした。保健の期末テストを自動で作りたい。ただし、それぞれの問題が学習指導要領のどこに基づいているかを、テストの中にちゃんと書いておきたい、というものです。</div>
+  </div>
+  <div class="talk r">
+    <div class="av"><img src="assets/icon-haruto.png" alt="はると先生"><div class="nm">はると先生</div></div>
+    <div class="bub">数学だと、単元名を書けば範囲は伝わりますよね。保健だと足りませんか。</div>
+  </div>
+  <div class="talk">
+    <div class="av"><img src="assets/icon-tozaki.png" alt="とざき先生"><div class="nm">とざき先生</div></div>
+    <div class="bub">保健は、同じ「傷害の防止」でも、何を理解させ、何を考えさせるかが指導要領に細かく書いてあります。テストの根拠を聞かれたときに「指導要領の(3)のアの(ｴ)です」と答えられるかどうか。そこを最初から紙に書いておく、という相談でした。</div>
+  </div>
+
+  <figure class="fig">
+    <img src="assets/zukai6.png" alt="根拠を明記させる型。指導要領の抜粋をフォルダに置く（先生）、各問題に項目番号を書く（Codex）、対応表を別紙で出す（Codex）、項目番号を本文と照合する（先生）">
+    <figcaption>今回の型。第3回との違いは、範囲メモの隣に一次資料を置くことと、対応表を別紙で出させることの2つです</figcaption>
+  </figure>
+
+  <div class="sec-head"><span class="sn">2</span></div>
+  <h2>一次資料をフォルダに置く</h2>
+
+  <div class="talk">
+    <div class="av"><img src="assets/icon-tozaki.png" alt="とざき先生"><div class="nm">とざき先生</div></div>
+    <div class="bub">根拠を書かせるなら、根拠そのものをCodexに渡します。文部科学省が公開している「中学校学習指導要領（平成29年告示）解説 保健体育編」のPDFです。保健分野の目標・内容・内容の取扱いは、解説の206ページから228ページにあります。</div>
+  </div>
+  <div class="talk r">
+    <div class="av"><img src="assets/icon-haruto.png" alt="はると先生"><div class="nm">はると先生</div></div>
+    <div class="bub">300ページ以上ある本ですよね。丸ごと渡すんですか。</div>
+  </div>
+  <div class="talk">
+    <div class="av"><img src="assets/icon-tozaki.png" alt="とざき先生"><div class="nm">とざき先生</div></div>
+    <div class="bub">丸ごと渡してもかまいませんが、私は保健分野の23ページだけをテキストファイルに抜き出して、範囲メモの隣に置きました。抜き出し自体もCodexに頼めます。「このPDFの206ページから228ページの本文をテキストファイルにして」でできます。今回使った抜粋ファイルは、この講座のリポジトリの sample フォルダに置いてあります。</div>
+  </div>
+
+  <p class="note">学習指導要領は国の告示で、解説は文部科学省の刊行物です。どちらも文部科学省のサイトで公開されていて、出典を書けば使えます。抜粋ファイルの先頭に出典を1行書いておきます。教科書の本文とは扱いが違うところです。</p>
+
+  <h3>どの学年で何を扱うか</h3>
+  <p>解説の226ページ「内容の取扱い」に、保健分野の学年配当が書いてあります。範囲メモを書く前にここを見ます。</p>
+
+  <div class="tw">
+  <table class="alloc">
+    <tr><th>内容</th><th>学年</th></tr>
+    <tr><td>(1) 健康な生活と疾病の予防　ア(ｱ)(ｲ)</td><td>第1学年</td></tr>
+    <tr><td>(1) 健康な生活と疾病の予防　ア(ｳ)(ｴ)</td><td>第2学年</td></tr>
+    <tr><td>(1) 健康な生活と疾病の予防　ア(ｵ)(ｶ)</td><td>第3学年</td></tr>
+    <tr><td>(1) 健康な生活と疾病の予防　イ</td><td>全学年</td></tr>
+    <tr><td>(2) 心身の機能の発達と心の健康</td><td>第1学年</td></tr>
+    <tr><td>(3) 傷害の防止</td><td>第2学年</td></tr>
+    <tr><td>(4) 健康と環境</td><td>第3学年</td></tr>
+  </table>
+  </div>
+
+  <div class="talk">
+    <div class="av"><img src="assets/icon-tozaki.png" alt="とざき先生"><div class="nm">とざき先生</div></div>
+    <div class="bub">今回は中学2年の2学期期末なので、範囲は「(3) 傷害の防止」と「(1)のア(ｳ)(ｴ)」です。範囲メモはこう書きました。</div>
+  </div>
+
+  <div class="memo">
+    <span class="mt">hani.txt ── 見本に使った範囲メモの全文</span>
+    <div class="mlines">
+<p>中学2年 保健体育（保健分野） 2学期期末テスト 範囲メモ</p>
+<p class="sp"></p>
+<p class="bul">傷害の防止（交通事故や自然災害などによる傷害の発生要因／交通事故などによる傷害の防止／自然災害による傷害の防止／応急手当の意義と実際）</p>
+<p class="bul">健康な生活と疾病の予防のうち、2年で扱う内容（生活習慣病などの予防／喫煙、飲酒、薬物乱用と健康）</p>
+<p class="sp"></p>
+<p>授業で扱ったこと：応急手当は心肺蘇生法とAEDの使い方、包帯法・止血法の実習をした。自然災害は地震と大雨・洪水を扱った。</p>
+<p>生徒の様子：用語は覚えているが、「なぜその行動が必要か」を自分の言葉で説明するところでつまずく子が多い。</p>
+    </div>
+  </div>
+
+  <div class="sec-head"><span class="sn">3</span></div>
+  <h2>頼んだ言葉の原文</h2>
+
+  <div class="prompt">
+    <span class="pt">Codexへの頼み方 ── そのまま貼って使えます</span>
+    <div class="pbody">
+<p>このフォルダの「hani.txt」に書いた範囲で、中学2年 保健体育（保健分野）の2学期期末テストを作ってください。</p>
+<p class="sp"></p>
+<p>同じフォルダの「shidou_youryou_hoken_bunya.txt」は、中学校学習指導要領（平成29年告示）解説 保健体育編の保健分野の本文です。問題は必ずこの文書に書かれている内容に基づいて作り、教科書や問題集の問題をそのまま使わないでください。</p>
+<p class="sp"></p>
+<p class="bul">50分・100点満点</p>
+<p class="bul">大問は5つ。前半は「知識・技能」、後半は「思考・判断・表現」の問題にして、各問題に観点と配点を書く</p>
+<p class="bul">各問題の末尾に、学習指導要領のどこに基づくかを【指導要領：保健分野 (3) ア (ｴ)】の形で必ず書く。指導要領のどこに基づくか書けない問題は作らない</p>
+<p class="bul">問題用紙、解答用紙、模範解答と配点表、指導要領対応表の4つを、それぞれWordファイル（.docx）で作る。対応表は「大問・小問／観点／配点／指導要領の項目／その項目の本文（短い抜粋）」の表にする</p>
+<p class="bul">応急手当は実習をしているので、手順とその理由の理解を問う問題を入れる</p>
+<p class="bul">すべての問題の答えを、指導要領の本文と照らして確かめてから模範解答を書く</p>
+<p class="bul">生徒の名前など個人の情報は入れない（氏名の記入欄だけ作る）</p>
+<p class="sp"></p>
+<p>できたら、どんな問題を作ったかと、どの指導要領の項目を使ったかを日本語で短く報告してください。</p>
+</div>
+    <p class="pafter"><b>すると何が起きるか</b>Codexが範囲メモと指導要領の抜粋を読み、問題を決め、答えと抜粋を本文と照らしてから、Wordファイルを4つ作ります。私のときは約17分でした。</p>
+  </div>
+
+  <div class="talk r">
+    <div class="av"><img src="assets/icon-haruto.png" alt="はると先生"><div class="nm">はると先生</div></div>
+    <div class="bub">「書けない問題は作らない」って、わざわざ書くんですね。</div>
+  </div>
+  <div class="talk">
+    <div class="av"><img src="assets/icon-tozaki.png" alt="とざき先生"><div class="nm">とざき先生</div></div>
+    <div class="bub">ここがこの型のいちばん大事な一行です。これがないと、AIは根拠のない問題にも、それらしい項目番号をあとから貼ります。「書けないなら作るな」と先に言っておくと、問題の側を指導要領に寄せてきます。</div>
+  </div>
+
+  <div class="sec-head"><span class="sn">4</span></div>
+  <h2>Codexの返事とできあがったもの</h2>
+
+  <div class="reply">
+    <span class="rt">Codexからの報告 ── 実際に届いた文面</span>
+    <div class="rbody">
+      <p>作成しました。50分・100点、大問5題、知識・技能60点／思考・判断・表現40点です。</p>
+      <ul>
+        <li>01_問題用紙.docx</li>
+        <li>02_解答用紙.docx</li>
+        <li>03_模範解答と配点表.docx</li>
+        <li>04_指導要領対応表.docx</li>
+      </ul>
+      <p>交通事故・自然災害の危険予測、生活習慣病、喫煙・飲酒・薬物乱用、応急手当の手順と理由を扱っています。使用項目は、保健分野の「(3) ア (ｱ)〜(ｴ)・(3) イ」と「(1) ア (ｳ)(ｴ)・(1) イ」です。全21小問の正答と抜粋を指定本文と照合し、配点合計・観点・表幅・個人情報の不記載を検証しました。</p>
+      <p>なお、documentsスキルの標準レンダリング環境が不足し、Microsoft Wordの操作も承認されなかったため、画像による全ページの目視確認だけは実施できていません。Word文書の構造検査は完了しています。</p>
+    </div>
+  </div>
+
+  <figure class="fig">
+    <img src="assets/shot-hoken-p1.png" alt="Codexが作った中学2年 保健分野 2学期期末テストの問題用紙1ページ目。各問題の末尾に観点・配点と【指導要領：保健分野 …】の表記" loading="lazy">
+    <figcaption>問題用紙の1ページ目。各問題の末尾に、観点と配点に続けて【指導要領：保健分野 (3) ア (ｱ)】のような根拠が入っています</figcaption>
+  </figure>
+
+  <figure class="fig">
+    <img src="assets/shot-hoken-taiou.png" alt="指導要領対応表。大問・小問、観点、配点、指導要領の項目、その項目の本文の抜粋が表になっている" loading="lazy">
+    <figcaption>別紙の指導要領対応表。小問ごとに、指導要領の項目と本文の抜粋が並びます。教科会や管理職に説明するときはこの1枚です</figcaption>
+  </figure>
+
+  <div class="sec-head"><span class="sn">5</span></div>
+  <h2>根拠の表記を照合する</h2>
+
+  <div class="talk">
+    <div class="av"><img src="assets/icon-tozaki.png" alt="とざき先生"><div class="nm">とざき先生</div></div>
+    <div class="bub">数学の検算にあたるのが、この照合です。2段でやります。1段目は機械で、【指導要領：…】の表記を全部拾って、存在する項目か、2年で扱う項目かを確かめる。2段目は目で、対応表の抜粋が解説の本文と合っているかを読む。</div>
+  </div>
+
+  <h3>機械の照合</h3>
+  <ol class="steps">
+    <li>問題用紙の【指導要領：…】を全部拾う。21問すべてに表記があり、存在しない項目や、2年で扱わない項目は0件</li>
+    <li>対応表の「本文の抜粋」が、抜粋ファイルの本文にそのまま存在するか調べる。29の文がすべて本文と一致</li>
+  </ol>
+
+  <h3>目の照合</h3>
+  <div class="talk">
+    <div class="av"><img src="assets/icon-tozaki.png" alt="とざき先生"><div class="nm">とざき先生</div></div>
+    <div class="bub">対応表を上から読みました。応急手当の4つ（気道確保・人工呼吸・胸骨圧迫・AEDの使用）、止血法と包帯法、地震の二次災害、喫煙・飲酒・薬物乱用の急性影響と依存性。どれも解説の本文にある言葉で問題が組まれていました。中身に直しは出ませんでした。</div>
+  </div>
+  <div class="talk r">
+    <div class="av"><img src="assets/icon-haruto.png" alt="はると先生"><div class="nm">はると先生</div></div>
+    <div class="bub">中身は合格で、直しはなしですか。</div>
+  </div>
+  <div class="talk">
+    <div class="av"><img src="assets/icon-tozaki.png" alt="とざき先生"><div class="nm">とざき先生</div></div>
+    <div class="bub">中身はなしです。ただ、紙面と言い回しで3つ出ました。問題文に「指導要領に示されている内容に合うものを選びなさい」と書いてある問題が2つあって、生徒は指導要領を読まないので、これは直します。あとは数学と同じで、大問ごとの改ページと、解答用紙の欄が下線だけだったこと。第4回と同じ形で頼みました。</div>
+  </div>
+
+  <div class="prompt">
+    <span class="pt">Codexへの頼み方 2 ── 直し</span>
+    <div class="pbody">
+<p>このフォルダにある4つのWordファイル（01_問題用紙・02_解答用紙・03_模範解答と配点表・04_指導要領対応表）を直してください。元のファイルは残し、直したものは「_修正版」を付けた名前で保存してください。</p>
+<p class="sp"></p>
+<p class="bul">問題用紙の問題文に「指導要領に示されている」という言葉が入っている（大問1の問4、大問3の問2）。生徒は指導要領を読まないので、その言葉を使わずに同じことを問う文に直す。【指導要領：…】の表記はそのまま残す</p>
+<p class="bul">問題用紙と解答用紙で、大問ごとに改ページしない。問題用紙は3ページ以内、解答用紙は3ページ以内に収める</p>
+<p class="bul">解答用紙の記述欄は、下線（＿＿＿）ではなく、罫線で囲んだ枠にする。枠の高さは、模範解答の文の長さに合わせる（1行の答えは1行分、3文の答えは3行分）</p>
+<p class="bul">問題用紙の氏名欄の横にある「得点：／100」は消す（得点欄は解答用紙だけでよい）</p>
+<p class="sp"></p>
+<p>直したら、変えたところを日本語で短く報告してください。</p>
+</div>
+    <p class="pafter"><b>すると何が起きるか</b>私のときは約15分で、4つとも「_修正版」の名前で保存されました。報告は「指定の2問を言い換え、得点欄を削除。3ページ構成に調整」「大問ごとの改ページを廃止し、下線を解答量に応じた罫線枠へ変更。3ページ構成に調整」。Wordで開くと、問題用紙は6ページから3ページ、解答用紙は5ページから3ページになり、「指導要領に示されている」の2か所は「適切なものを」「心肺蘇生法で行う四つの方法を」に変わっていました。根拠の表記21件は、直したあとも全部残っていました。</p>
+  </div>
+
+  <p class="note">見本では、生徒が見る問題用紙にも【指導要領：…】の表記を残しています。相談してくれた先生が「テストの中に書いておきたい」と言っていたからです。生徒には見せず、教員用の対応表だけに残したいときは、「問題用紙の【指導要領：…】の表記を全部消してください。対応表はそのまま」と1行頼めば済みます。</p>
+
+  <p class="note">機械の照合は、Codexに頼めば作ってくれます。「問題用紙と対応表にある【指導要領：…】の表記を全部抜き出して、shidou_youryou_hoken_bunya.txt にある項目と学年配当に照らして一覧にしてください」で足ります。目の照合だけは先生の仕事です。</p>
+
+  <div class="sec-head"><span class="sn">6</span></div>
+  <h2>型のまとめ</h2>
+
+  <div class="talk">
+    <div class="av"><img src="assets/icon-tozaki.png" alt="とざき先生"><div class="nm">とざき先生</div></div>
+    <div class="bub">保健でやったことは、そのまま他の教科でも使えます。変わるのは、解説のどのページを抜き出すかだけです。</div>
+  </div>
+
+  <ol class="steps">
+    <li>文部科学省の解説PDFから、その教科・分野のページを抜き出してフォルダに置く。先頭に出典を1行</li>
+    <li>解説の「内容の取扱い」で学年配当を確かめて、範囲メモを書く</li>
+    <li>頼み方に「各問題の末尾に【指導要領：…】を必ず書く。書けない問題は作らない」を入れる</li>
+    <li>対応表を別紙で出させる。項目と本文の抜粋が並ぶ形</li>
+    <li>機械で表記を照合し、目で抜粋を読んでから配る</li>
+  </ol>
+
+  <div class="terms">
+    <dl>
+      <div class="term"><dt>体育理論</dt><dd>同じ解説 保健体育編の「H 体育理論」（189ページから）を抜き出す。学年ごとに(1)(2)(3)が分かれている</dd></div>
+      <div class="term"><dt>他の教科</dt><dd>解説はすべて教科ごとに公開されている。国語編・社会編・理科編など、その教科の「各学年の目標及び内容」のページを抜き出せば同じ型で動く</dd></div>
+      <div class="term"><dt>表記の形</dt><dd>【指導要領：保健分野 (3) ア (ｴ)】のように、内容番号・ア／イ・小項目の3段で書かせる。学校で使っている表記があれば、頼み方の見本をそれに合わせる</dd></div>
+    </dl>
+  </div>
+
+  <p class="note">見本の4つのWordファイルと、範囲メモ、指導要領の抜粋ファイルは、リポジトリの sample/hoken フォルダに置いています。中学2年の保健分野なら、自分のクラス用に直して使ってかまいません。配る前に、全問を自分で解き、対応表を自分の目で読んでください。</p>
+
+  <div class="try">
+    <span class="tt">やってみよう</span>
+    <p>自分の教科の解説PDFを文部科学省のサイトから開き、次のテストの範囲にあたるページ番号を控えてください。それをCodexに「このPDFの◯ページから◯ページの本文をテキストファイルにして」と頼めば、一次資料の準備は終わりです。</p>
+  </div>
+
+  <div class="pn">
+    <a class="prev" href="lesson5.html">第5回 配る前に守る3つ</a>
+    <a class="next" href="index.html">講座の目次</a>
+  </div>
+
+</article>
+
+<footer>
+  <div class="foot-in">
+    <span>© School Stock ─ はると先生は架空の先生です</span>
+    <span><a href="index.html">講座の目次へ</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
