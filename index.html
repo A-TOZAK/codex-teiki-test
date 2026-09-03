@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Codexで作る 中学校の定期テスト ── 範囲メモ1枚から問題・解答用紙・模範解答まで</title>
+<meta name="description" content="中学校の先生に向けて、OpenAIのCodexに定期テスト（中間・期末）を作らせる手順を全5回でお伝えします。範囲メモ1枚を渡し、問題用紙・解答用紙・模範解答をWordで受け取り、先生が解いて確かめてから配ります。">
+<style>
+  :root { --ink:#15181c; --sub:#6b7077; --accent:#2b5fd9; --paper:#fff; --wash:#f6f6f4; --line:#e6e6e3; --black:#0e0f11; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP","Yu Gothic Medium",sans-serif; background:var(--paper); color:var(--ink); line-height:1.9; letter-spacing:0.02em; -webkit-font-smoothing:antialiased; }
+  a { color:var(--accent); text-decoration:none; }
+  .topbar { background:var(--black); color:#fff; position:sticky; top:0; z-index:40; }
+  .topbar-in { max-width:820px; margin:0 auto; padding:13px 24px; display:flex; justify-content:space-between; align-items:center; gap:14px; }
+  .wordmark { font-size:12.5px; font-weight:700; letter-spacing:0.28em; color:#fff; white-space:nowrap; }
+  .topbar-in .course { font-size:11.5px; color:#b9bcc2; letter-spacing:0.1em; white-space:nowrap; }
+  .hero { border-bottom:1px solid var(--ink); background:#fdfdfb; }
+  .hero-in { max-width:820px; margin:0 auto; padding:56px 24px 48px; }
+  .kicker { display:inline-block; font-size:11.5px; font-weight:700; letter-spacing:0.2em; color:#fff; background:var(--black); padding:4px 12px; margin-bottom:20px; }
+  h1 { font-size:clamp(24px,4vw,34px); font-weight:700; line-height:1.5; margin-bottom:16px; word-break:auto-phrase; text-wrap:pretty; }
+  .lead { font-size:15.5px; color:#3d4148; line-height:2.0; max-width:640px; }
+  .container { max-width:820px; margin:0 auto; padding:0 24px 72px; }
+  .sec-head { display:flex; align-items:baseline; gap:13px; margin:56px 0 8px; }
+  .sec-head .sn { font-family:Georgia,serif; font-style:italic; font-size:20px; font-weight:700; color:var(--accent); }
+  .sec-head .sl { font-size:11.5px; font-weight:700; letter-spacing:0.22em; color:var(--sub); }
+  .sec-title { font-size:20px; font-weight:700; margin:0 0 18px; word-break:auto-phrase; }
+  .lessons { display:flex; flex-direction:column; gap:14px; }
+  .lesson { display:flex; gap:0; border:1px solid var(--ink); color:inherit; transition:box-shadow .15s; }
+  .lesson:hover { box-shadow:4px 4px 0 var(--ink); }
+  .lesson .num { flex:0 0 84px; display:flex; align-items:center; justify-content:center; border-right:1px solid var(--ink); background:var(--wash); font-family:Georgia,serif; font-style:italic; font-size:30px; font-weight:700; color:var(--accent); }
+  .lesson .b { padding:18px 22px 16px; flex:1; }
+  .lesson .lt { font-size:10.5px; font-weight:700; letter-spacing:0.16em; color:var(--sub); }
+  .lesson h2 { font-size:18px; font-weight:700; margin:3px 0 5px; word-break:auto-phrase; }
+  .lesson p { font-size:13px; line-height:1.85; color:#3d4148; word-break:auto-phrase; }
+  .lesson .go { font-size:12.5px; font-weight:700; color:var(--accent); margin-top:6px; display:inline-block; }
+  .who { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  @media (max-width:640px){ .who { grid-template-columns:1fr; } .lesson .num { flex-basis:60px; font-size:24px; } }
+  .who .w { border:1px solid var(--line); padding:18px 20px 16px; }
+  .who .w b { font-size:14.5px; display:block; margin-bottom:5px; word-break:auto-phrase; text-wrap:pretty; }
+  .who .w span { font-size:12.5px; color:var(--sub); line-height:1.8; word-break:auto-phrase; display:block; }
+  .note { border-left:3px solid var(--accent); background:var(--wash); padding:16px 20px; font-size:13.5px; line-height:1.9; margin-top:8px; }
+  .fig { border:1px solid var(--line); margin:8px 0 0; }
+  .fig img { display:block; width:100%; height:auto; }
+  .fig figcaption { font-size:12px; color:var(--sub); padding:9px 14px; border-top:1px solid var(--line); line-height:1.7; }
+  .author { border-top:1px solid var(--ink); margin-top:64px; padding-top:24px; font-size:13px; color:#3d4148; line-height:1.9; }
+  .author b { display:block; font-size:11.5px; font-weight:700; letter-spacing:0.2em; color:var(--sub); margin-bottom:6px; }
+  footer { border-top:1px solid var(--line); margin-top:48px; }
+  .foot-in { max-width:820px; margin:0 auto; padding:22px 24px; display:flex; justify-content:space-between; gap:14px; font-size:11.5px; color:var(--sub); }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-in">
+    <span class="wordmark">SCHOOL STOCK</span>
+    <span class="course">CODEX FOR TEACHERS</span>
+  </div>
+</div>
+
+<div class="hero">
+  <div class="hero-in">
+    <span class="kicker">全5回・無料</span>
+    <h1>Codexで作る 中学校の定期テスト<br>範囲メモ1枚から 問題・解答用紙・模範解答まで</h1>
+    <p class="lead">中学校の先生に向けて、OpenAIのCodexに中間テスト・期末テストを作らせる手順を、5回に分けてお伝えします。Codexに渡すのは範囲メモ1枚だけ。問題用紙・解答用紙・模範解答の3点をWordファイルで受け取り、先生が全問解いて確かめてから配ります。本文は、AIで教材を作っているとざき先生と、中学校で数学を教えて2年目のはると先生の対話で進みます。見本のテストは、この講座のために実際にCodexに作らせたものをそのまま載せています。1回あたり、読むのに約10分です。</p>
+  </div>
+</div>
+
+<div class="container">
+
+  <section>
+    <div class="sec-head"><span class="sn">01</span><span class="sl">COURSE</span></div>
+    <h2 class="sec-title">講座の全体像</h2>
+    <div class="lessons">
+      <a class="lesson" href="lesson1.html">
+        <span class="num">1</span>
+        <span class="b">
+          <span class="lt">LESSON 1</span>
+          <h2>定期テストのどこをCodexに任せるか</h2>
+          <p>テスト作りを6つの工程に分けると、任せるのは真ん中の3つです。チャットのAIとCodexの違いと、範囲メモがなぜ効くかをお話しします。この回は読むだけです。</p>
+          <span class="go">第1回を読む →</span>
+        </span>
+      </a>
+      <a class="lesson" href="lesson2.html">
+        <span class="num">2</span>
+        <span class="b">
+          <span class="lt">LESSON 2</span>
+          <h2>準備 Codexと範囲メモ</h2>
+          <p>ChatGPTの有料プランでCodexを開き、テスト用のフォルダを1つ作ります。範囲メモの書き方はここで決まります。パスワードだけは自分で扱います。</p>
+          <span class="go">第2回を読む →</span>
+        </span>
+      </a>
+      <a class="lesson" href="lesson3.html">
+        <span class="num">3</span>
+        <span class="b">
+          <span class="lt">LESSON 3</span>
+          <h2>範囲メモから作らせる</h2>
+          <p>中学2年 数学の2学期中間テストを、頼んだ言葉の原文からCodexの返事、できあがったWordファイルまで1本まるごとお見せします。</p>
+          <span class="go">第3回を読む →</span>
+        </span>
+      </a>
+      <a class="lesson" href="lesson4.html">
+        <span class="num">4</span>
+        <span class="b">
+          <span class="lt">LESSON 4</span>
+          <h2>直す 整える 印刷する</h2>
+          <p>問題を易しくする、記述を足す、解答欄を広げる。直しは全部日本語で頼みます。数学以外の教科での範囲メモの書き方にも触れます。</p>
+          <span class="go">第4回を読む →</span>
+        </span>
+      </a>
+      <a class="lesson" href="lesson5.html">
+        <span class="num">5</span>
+        <span class="b">
+          <span class="lt">LESSON 5</span>
+          <h2>配る前に守る3つ</h2>
+          <p>全問を自分で解く。教科書の文章を渡さない。生徒の情報を入れない。AIが作ったテストを自分のテストにするための線を、私が毎回通している形でお渡しします。</p>
+          <span class="go">第5回を読む →</span>
+        </span>
+      </a>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="sn">02</span><span class="sl">FOR WHOM</span></div>
+    <h2 class="sec-title">こんな先生に向けて書いています</h2>
+    <div class="who">
+      <div class="w"><b>テスト作りが夜に食い込む先生</b><span>範囲は決まっている。問題を打ち込んで体裁を整える時間が取れない。</span></div>
+      <div class="w"><b>AIで問題は作れる先生</b><span>ChatGPTのチャットで問題は出せる。Wordに整えて解答用紙まで作るところで手が止まる。</span></div>
+      <div class="w"><b>AIの答えをそのまま配るのが不安な先生</b><span>どこを自分の目で見ればよいかを知りたい。</span></div>
+    </div>
+    <p class="note">この講座で先生が自分の手でやるのは「範囲を決める」「全問を解いて確かめる」の2つです。それ以外の作業は、Codexに日本語で頼みます。</p>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="sn">03</span><span class="sl">SAMPLE</span></div>
+    <h2 class="sec-title">この講座で作る見本</h2>
+    <figure class="fig">
+      <img src="assets/shot-test-p1.png" alt="Codexが作った中学2年 数学 2学期中間テストの問題用紙1ページ目" loading="lazy">
+      <figcaption>中学2年 数学 2学期中間テスト（一次関数）。第3回で、この見本ができるまでを1本まるごとお見せします</figcaption>
+    </figure>
+  </section>
+
+  <div class="author">
+    <b>書いている人</b>
+    外﨑顯博（とざき あきひろ）。福岡県の公立小学校教員。私は小学校の担任で、中学校の定期テストを作る立場ではありません。ここに書いたのは、自分の教材やテストをAIで作るときに毎回やっていることを、中学校の定期テストの形（範囲メモ・観点別の配点・解答用紙）に当てはめたものです。見本のテストは実際にCodexに作らせ、私が全問解いて確かめました。教科の細かいところは、それぞれの先生の目で直してください。対話に登場するはると先生は、この講座のために作った架空の先生です。
+  </div>
+
+</div>
+
+<footer>
+  <div class="foot-in">
+    <span>© School Stock</span>
+    <span><a href="https://a-tozak.github.io/School_Stock/">School Stock の棚へ</a></span>
+  </div>
+</footer>
+
+</body>
+</html>

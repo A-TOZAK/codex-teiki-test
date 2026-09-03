@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第2回 準備 Codexと範囲メモ｜Codexで作る 中学校の定期テスト</title>
+<meta name="description" content="ChatGPTの有料プランでCodexを開き、テスト用のフォルダを作り、範囲メモを1枚書く。全5回講座の第2回。">
+<style>
+  :root { --ink:#15181c; --sub:#6b7077; --accent:#2b5fd9; --paper:#fff; --wash:#f6f6f4; --line:#e6e6e3; --black:#0e0f11; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP","Yu Gothic Medium",sans-serif; background:var(--paper); color:var(--ink); line-height:2.0; letter-spacing:0.02em; -webkit-font-smoothing:antialiased; }
+  a { color:var(--accent); text-decoration:none; }
+  .topbar { background:var(--black); color:#fff; position:sticky; top:0; z-index:40; }
+  .topbar-in { max-width:720px; margin:0 auto; padding:13px 24px; display:flex; justify-content:space-between; align-items:center; gap:14px; }
+  .wordmark { font-size:12.5px; font-weight:700; letter-spacing:0.28em; color:#fff; white-space:nowrap; }
+  .topbar-in a.home { font-size:11.5px; color:#b9bcc2; letter-spacing:0.1em; white-space:nowrap; }
+  .topbar-in a.home:hover { color:#fff; }
+  @media (max-width:430px){ .topbar-in .hp { display:none; } }
+  .lhead { border-bottom:1px solid var(--ink); background:#fdfdfb; }
+  .lhead-in { max-width:720px; margin:0 auto; padding:48px 24px 40px; }
+  .lnum { font-family:Georgia,serif; font-style:italic; font-size:44px; font-weight:700; color:var(--accent); line-height:1; }
+  .llabel { font-size:11.5px; font-weight:700; letter-spacing:0.22em; color:var(--sub); margin:10px 0 8px; }
+  h1 { font-size:clamp(23px,4vw,30px); font-weight:700; line-height:1.5; word-break:auto-phrase; text-wrap:pretty; }
+  .lead { font-size:14.5px; color:#3d4148; margin-top:14px; max-width:600px; }
+  article { max-width:720px; margin:0 auto; padding:8px 24px 64px; }
+  .sec-head { display:flex; align-items:baseline; gap:13px; margin:52px 0 6px; }
+  .sec-head .sn { font-family:Georgia,serif; font-style:italic; font-size:19px; font-weight:700; color:var(--accent); }
+  h2 { font-size:20px; font-weight:700; margin:0 0 16px; word-break:auto-phrase; }
+  h3 { font-size:15.5px; font-weight:700; margin:28px 0 8px; word-break:auto-phrase; }
+  p { font-size:15px; margin-bottom:16px; }
+  .talk { display:flex; gap:13px; margin:20px 0; align-items:flex-start; }
+  .talk .av { flex:0 0 56px; text-align:center; }
+  .talk .av img { width:56px; height:56px; clip-path:circle(50%); display:block; }
+  .talk .av .nm { font-size:10px; color:var(--sub); margin-top:3px; white-space:nowrap; }
+  .talk .bub { position:relative; border:1px solid var(--ink); background:var(--paper); padding:12px 17px; font-size:14.5px; line-height:1.9; margin-top:4px; }
+  .talk .bub::before { content:""; position:absolute; top:18px; left:-8px; width:14px; height:14px; background:inherit; border-left:1px solid var(--ink); border-bottom:1px solid var(--ink); transform:rotate(45deg); }
+  .talk.r { flex-direction:row-reverse; }
+  .talk.r .bub { background:var(--wash); }
+  .talk.r .bub::before { left:auto; right:-8px; border:none; border-right:1px solid var(--ink); border-top:1px solid var(--ink); transform:rotate(45deg); }
+  .fig { border:1px solid var(--line); margin:24px 0; }
+  .fig img { display:block; width:100%; height:auto; }
+  .fig figcaption { font-size:12px; color:var(--sub); padding:9px 14px; border-top:1px solid var(--line); line-height:1.7; }
+  ol.steps { margin:0 0 16px 0; padding-left:0; list-style:none; counter-reset:step; }
+  ol.steps li { position:relative; padding:0 0 14px 44px; counter-increment:step; font-size:14.5px; }
+  ol.steps li::before { content:counter(step); position:absolute; left:0; top:4px; width:28px; height:28px; border:1px solid var(--ink); display:flex; align-items:center; justify-content:center; font-family:Georgia,serif; font-style:italic; font-weight:700; font-size:14px; color:var(--accent); }
+  .note { border-left:3px solid var(--accent); background:var(--wash); padding:16px 20px; font-size:13.5px; line-height:1.9; margin:20px 0; }
+  .warn { border-left:3px solid var(--black); background:var(--wash); padding:16px 20px; font-size:13.5px; line-height:1.9; margin:20px 0; }
+  .warn b { display:block; font-size:11px; letter-spacing:0.2em; color:var(--sub); margin-bottom:6px; }
+  .prompt { border:1px solid var(--ink); margin:20px 0; }
+  .prompt .pt { display:block; font-size:10.5px; font-weight:700; letter-spacing:0.16em; color:#fff; background:var(--black); padding:6px 16px; }
+  .prompt .pbody { padding:16px 20px; font-size:14.5px; line-height:1.95; background:var(--wash); white-space:pre-wrap; margin:0; }
+  .prompt .pafter { padding:12px 20px 14px; font-size:13px; color:#3d4148; border-top:1px solid var(--line); line-height:1.85; margin:0; }
+  .prompt .pafter b { font-size:10.5px; font-weight:700; letter-spacing:0.16em; color:var(--sub); display:block; margin-bottom:4px; }
+  .memo { border:1px solid var(--ink); margin:20px 0; }
+  .memo .mt { display:block; font-size:10.5px; font-weight:700; letter-spacing:0.16em; color:var(--sub); background:var(--wash); padding:6px 16px; border-bottom:1px solid var(--line); }
+  .memo pre { padding:16px 20px; font-family:inherit; font-size:14px; line-height:1.9; white-space:pre-wrap; }
+  .memo .mlines { padding:16px 20px; }
+  .memo .mlines p { font-size:14px; line-height:1.9; margin:0; }
+  .memo .mlines p.sp { height:14px; }
+  .memo .mlines p.bul { padding-left:1em; text-indent:-1em; }
+  .memo .mlines p.bul::before { content:"・"; }
+  .reply { border:1px solid var(--line); background:#fdfdfb; margin:20px 0; }
+  .reply .rt { display:block; font-size:10.5px; font-weight:700; letter-spacing:0.16em; color:var(--sub); padding:6px 16px; border-bottom:1px solid var(--line); }
+  .reply .rbody { padding:14px 20px; font-size:13.5px; line-height:1.9; color:#3d4148; }
+  .reply .rbody p { font-size:13.5px; margin-bottom:8px; }
+  .reply .rbody ul { padding-left:20px; margin-bottom:8px; }
+  .reply .rbody li { font-size:13.5px; }
+  .terms { border:1px solid var(--ink); margin:20px 0; }
+  .term { display:flex; border-bottom:1px solid var(--line); }
+  .term:last-child { border-bottom:none; }
+  .term dt { flex:0 0 152px; padding:14px 16px; font-size:13.5px; font-weight:700; background:var(--wash); border-right:1px solid var(--line); word-break:auto-phrase; }
+  .term dd { flex:1; padding:14px 18px; font-size:13.5px; line-height:1.85; color:#3d4148; word-break:auto-phrase; }
+  @media (max-width:520px){ .term { flex-direction:column; } .term dt { border-right:none; border-bottom:1px solid var(--line); flex-basis:auto; } }
+  .try { border:1px solid var(--ink); background:var(--wash); padding:20px 22px 16px; margin:44px 0 0; }
+  .try .tt { font-size:11px; font-weight:700; letter-spacing:0.2em; color:#fff; background:var(--black); display:inline-block; padding:3px 10px; margin-bottom:10px; }
+  .try p { font-size:14px; margin-bottom:6px; }
+  .pn { display:flex; justify-content:space-between; gap:14px; border-top:1px solid var(--ink); margin-top:56px; padding-top:20px; }
+  .pn a { font-size:13px; font-weight:700; word-break:auto-phrase; }
+  .pn .prev::before { content:"← "; }
+  .pn .next::after { content:" →"; }
+  footer { border-top:1px solid var(--line); }
+  .foot-in { max-width:720px; margin:0 auto; padding:22px 24px; display:flex; justify-content:space-between; gap:14px; font-size:11.5px; color:var(--sub); }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-in">
+    <span class="wordmark">SCHOOL STOCK</span>
+    <a class="home" href="index.html"><span class="hp">CODEX FOR TEACHERS ─ </span>目次へ</a>
+  </div>
+</div>
+
+<div class="lhead">
+  <div class="lhead-in">
+    <div class="lnum">2</div>
+    <div class="llabel">LESSON 2</div>
+    <h1>準備 Codexと範囲メモ</h1>
+    <p class="lead">今回は道具をそろえる回です。Codexを開くのに約10分、範囲メモを書くのに約10分。ここまで済ませば、次回は作らせるだけです。</p>
+  </div>
+</div>
+
+<article>
+
+  <figure class="fig">
+    <img src="assets/zukai2.png" alt="準備でそろえる3つ。ChatGPTの有料プラン（ログインは自分の手で）、Codexを開く（作業するフォルダを1つ指定）、範囲メモを1枚（単元と生徒のつまずきを数行）">
+    <figcaption>今回そろえるのはこの3つ。1つ目のログインだけは自分の手でやります</figcaption>
+  </figure>
+
+  <div class="sec-head"><span class="sn">1</span></div>
+  <h2>ChatGPTの有料プランでログインする</h2>
+
+  <div class="talk r">
+    <div class="av"><img src="assets/icon-haruto.png" alt="はると先生"><div class="nm">はると先生</div></div>
+    <div class="bub">Codexって、別のサービスに登録するんですか。</div>
+  </div>
+  <div class="talk">
+    <div class="av"><img src="assets/icon-tozaki.png" alt="とざき先生"><div class="nm">とざき先生</div></div>
+    <div class="bub">いいえ、ChatGPTの有料プランに含まれています（2026年9月時点）。すでにPlusなどに入っているなら、そのアカウントでそのまま使えます。入っていなければ、ChatGPTの画面から有料プランに切り替えます。ここは普通のWebサービスと同じで、自分の手でやる場面です。</div>
+  </div>
+
+  <div class="warn">
+    <b>ここだけは守る</b>
+    ログインは必ずブラウザやアプリの画面で、自分の手で行います。パスワードをAIのチャット欄に打ち込むことはありません。まっとうなAIはパスワードを聞いてきません。逆に、何かがパスワードを直接聞いてきたら、それは入力しない合図です。
+  </div>
+
+  <p class="note">アカウントは個人のものを使います。学校や教育委員会に、AIの利用について決まりがあるところもあります。テストの下書きにAIを使うことについて、管理職や教科主任に先に一言たずねておくと、あとが気楽です。</p>
+
+  <div class="sec-head"><span class="sn">2</span></div>
+  <h2>Codexを開いてフォルダを指定する</h2>
+
+  <div class="talk">
+    <div class="av"><img src="assets/icon-tozaki.png" alt="とざき先生"><div class="nm">とざき先生</div></div>
+    <div class="bub">Macなら、ChatGPTのアプリの中にCodexが入っています。アプリを開くと、Codexの画面が選べます。Windowsやそれ以外の入り方は変わっていくので、<a href="https://openai.com/codex/" target="_blank" rel="noopener">OpenAIの公式ページ</a>の案内が正です。分からなくなったら、チャット画面のAIに「このパソコンでCodexを使う手順を教えて」と聞けば、今の手順を教えてくれます。</div>
+  </div>
+  <div class="talk r">
+    <div class="av"><img src="assets/icon-haruto.png" alt="はると先生"><div class="nm">はると先生</div></div>
+    <div class="bub">開いたら、最初に何をするんですか。</div>
+  </div>
+  <div class="talk">
+    <div class="av"><img src="assets/icon-tozaki.png" alt="とざき先生"><div class="nm">とざき先生</div></div>
+    <div class="bub">仕事をさせるフォルダを1つ指定します。私は「teiki-test」という空のフォルダを作って、それを指定しました。Codexはこのフォルダの中でファイルを作り、フォルダの外を触るときは先生に聞いてきます。</div>
+  </div>
+
+  <ol class="steps">
+    <li>デスクトップなどに「teiki-test」という名前の空のフォルダを作る</li>
+    <li>Codexを開き、作業するフォルダとして「teiki-test」を選ぶ</li>
+    <li>このフォルダには、範囲メモ以外を入れない。名簿・答案・教科書のスキャンは入れない</li>
+  </ol>
+
+  <div class="talk">
+    <div class="av"><img src="assets/icon-tozaki.png" alt="とざき先生"><div class="nm">とざき先生</div></div>
+    <div class="bub">3つ目が大事です。Codexは指定したフォルダの中を読みます。空のフォルダから始めれば、渡すつもりのないものが渡ることはありません。</div>
+  </div>
+
+  <div class="sec-head"><span class="sn">3</span></div>
+  <h2>範囲メモを1枚書く</h2>
+
+  <div class="talk">
+    <div class="av"><img src="assets/icon-tozaki.png" alt="とざき先生"><div class="nm">とざき先生</div></div>
+    <div class="bub">フォルダの中に「hani.txt」というテキストファイルを作って、範囲を書きます。私が見本のテストに使ったメモを、そのままお見せします。</div>
+  </div>
+
+  <div class="memo">
+    <span class="mt">hani.txt ── 見本に使った範囲メモの全文</span>
+<div class="mlines">
+<p>中学2年 数学 2学期中間テスト 範囲メモ</p>
+<p class="sp"></p>
+<p class="bul">一次関数（式とグラフ・変化の割合・グラフのかき方・式の求め方）</p>
+<p class="bul">一次関数と方程式（二元一次方程式のグラフ・連立方程式とグラフ）</p>
+<p class="bul">一次関数の利用（時間と道のり・水そうの水の量）</p>
+<p class="sp"></p>
+<p>生徒の様子：グラフをかくのは得意な子が多い。</p>
+<p>変化の割合の意味と、2点の座標から式を求めるところでつまずく子が多い。</p>
+</div>
+  </div>
+
+  <div class="talk r">
+    <div class="av"><img src="assets/icon-haruto.png" alt="はると先生"><div class="nm">はると先生</div></div>
+    <div class="bub">思ったより短いですね。教科書のページ数とか、入れなくていいんですか。</div>
+  </div>
+  <div class="talk">
+    <div class="av"><img src="assets/icon-tozaki.png" alt="とざき先生"><div class="nm">とざき先生</div></div>
+    <div class="bub">ページ数は書いてもかまいません。書かないのは、教科書の本文や問題そのものです。範囲メモは、単元名と、自分の言葉で書いた生徒の様子だけ。この「生徒の様子」の2行が、テストを自分のクラスのものにします。</div>
+  </div>
+
+  <h3>範囲メモに書く3つ</h3>
+  <ol class="steps">
+    <li>単元名。教科書の目次にある言葉でよい</li>
+    <li>授業で扱った範囲。どこまで進んだかが分かる程度に</li>
+    <li>生徒の様子。得意なところと、つまずいているところを1〜2行</li>
+  </ol>
+
+  <div class="sec-head"><span class="sn">4</span></div>
+  <h2>つながったか確かめる</h2>
+
+  <div class="talk">
+    <div class="av"><img src="assets/icon-tozaki.png" alt="とざき先生"><div class="nm">とざき先生</div></div>
+    <div class="bub">仕上げに1つだけ確認しましょう。Codexに、範囲メモを読ませてみます。</div>
+  </div>
+
+  <div class="prompt">
+    <span class="pt">Codexへの頼み方 ── そのまま貼って使えます</span>
+    <p class="pbody">このフォルダにある hani.txt を読んで、内容を日本語で3行にまとめてください。</p>
+    <p class="pafter"><b>すると何が起きるか</b>Codexがフォルダの中のファイルを読み、範囲と生徒の様子を3行で返してきます。自分が書いた内容がそのまま返ってきたら、準備は完了です。</p>
+  </div>
+
+  <div class="try">
+    <span class="tt">やってみよう</span>
+    <p>第1回の宿題で書いた3行を、hani.txt にしてフォルダに入れてください。上の頼み方で3行のまとめが返ってくるところまで進めば、次回はいよいよテストを作らせます。</p>
+  </div>
+
+  <div class="pn">
+    <a class="prev" href="lesson1.html">第1回 定期テストのどこをCodexに任せるか</a>
+    <a class="next" href="lesson3.html">第3回 範囲メモから作らせる</a>
+  </div>
+
+</article>
+
+<footer>
+  <div class="foot-in">
+    <span>© School Stock ─ はると先生は架空の先生です</span>
+    <span><a href="index.html">講座の目次へ</a></span>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第4回 直す 整える 印刷する｜Codexで作る 中学校の定期テスト</title>
+<meta name="description" content="問題を難しくする、改ページを直す、グラフの文字の重なりを直す。直しは全部日本語で頼む。数学以外の教科の範囲メモにも触れる。全5回講座の第4回。">
+<style>
+  :root { --ink:#15181c; --sub:#6b7077; --accent:#2b5fd9; --paper:#fff; --wash:#f6f6f4; --line:#e6e6e3; --black:#0e0f11; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP","Yu Gothic Medium",sans-serif; background:var(--paper); color:var(--ink); line-height:2.0; letter-spacing:0.02em; -webkit-font-smoothing:antialiased; }
+  a { color:var(--accent); text-decoration:none; }
+  .topbar { background:var(--black); color:#fff; position:sticky; top:0; z-index:40; }
+  .topbar-in { max-width:720px; margin:0 auto; padding:13px 24px; display:flex; justify-content:space-between; align-items:center; gap:14px; }
+  .wordmark { font-size:12.5px; font-weight:700; letter-spacing:0.28em; color:#fff; white-space:nowrap; }
+  .topbar-in a.home { font-size:11.5px; color:#b9bcc2; letter-spacing:0.1em; white-space:nowrap; }
+  .topbar-in a.home:hover { color:#fff; }
+  @media (max-width:430px){ .topbar-in .hp { display:none; } }
+  .lhead { border-bottom:1px solid var(--ink); background:#fdfdfb; }
+  .lhead-in { max-width:720px; margin:0 auto; padding:48px 24px 40px; }
+  .lnum { font-family:Georgia,serif; font-style:italic; font-size:44px; font-weight:700; color:var(--accent); line-height:1; }
+  .llabel { font-size:11.5px; font-weight:700; letter-spacing:0.22em; color:var(--sub); margin:10px 0 8px; }
+  h1 { font-size:clamp(23px,4vw,30px); font-weight:700; line-height:1.5; word-break:auto-phrase; text-wrap:pretty; }
+  .lead { font-size:14.5px; color:#3d4148; margin-top:14px; max-width:600px; }
+  article { max-width:720px; margin:0 auto; padding:8px 24px 64px; }
+  .sec-head { display:flex; align-items:baseline; gap:13px; margin:52px 0 6px; }
+  .sec-head .sn { font-family:Georgia,serif; font-style:italic; font-size:19px; font-weight:700; color:var(--accent); }
+  h2 { font-size:20px; font-weight:700; margin:0 0 16px; word-break:auto-phrase; }
+  h3 { font-size:15.5px; font-weight:700; margin:28px 0 8px; word-break:auto-phrase; }
+  p { font-size:15px; margin-bottom:16px; }
+  .talk { display:flex; gap:13px; margin:20px 0; align-items:flex-start; }
+  .talk .av { flex:0 0 56px; text-align:center; }
+  .talk .av img { width:56px; height:56px; clip-path:circle(50%); display:block; }
+  .talk .av .nm { font-size:10px; color:var(--sub); margin-top:3px; white-space:nowrap; }
+  .talk .bub { position:relative; border:1px solid var(--ink); background:var(--paper); padding:12px 17px; font-size:14.5px; line-height:1.9; margin-top:4px; }
+  .talk .bub::before { content:""; position:absolute; top:18px; left:-8px; width:14px; height:14px; background:inherit; border-left:1px solid var(--ink); border-bottom:1px solid var(--ink); transform:rotate(45deg); }
+  .talk.r { flex-direction:row-reverse; }
+  .talk.r .bub { background:var(--wash); }
+  .talk.r .bub::before { left:auto; right:-8px; border:none; border-right:1px solid var(--ink); border-top:1px solid var(--ink); transform:rotate(45deg); }
+  .fig { border:1px solid var(--line); margin:24px 0; }
+  .fig img { display:block; width:100%; height:auto; }
+  .fig figcaption { font-size:12px; color:var(--sub); padding:9px 14px; border-top:1px solid var(--line); line-height:1.7; }
+  ol.steps { margin:0 0 16px 0; padding-left:0; list-style:none; counter-reset:step; }
+  ol.steps li { position:relative; padding:0 0 14px 44px; counter-increment:step; font-size:14.5px; }
+  ol.steps li::before { content:counter(step); position:absolute; left:0; top:4px; width:28px; height:28px; border:1px solid var(--ink); display:flex; align-items:center; justify-content:center; font-family:Georgia,serif; font-style:italic; font-weight:700; font-size:14px; color:var(--accent); }
+  .note { border-left:3px solid var(--accent); background:var(--wash); padding:16px 20px; font-size:13.5px; line-height:1.9; margin:20px 0; }
+  .warn { border-left:3px solid var(--black); background:var(--wash); padding:16px 20px; font-size:13.5px; line-height:1.9; margin:20px 0; }
+  .warn b { display:block; font-size:11px; letter-spacing:0.2em; color:var(--sub); margin-bottom:6px; }
+  .prompt { border:1px solid var(--ink); margin:20px 0; }
+  .prompt .pt { display:block; font-size:10.5px; font-weight:700; letter-spacing:0.16em; color:#fff; background:var(--black); padding:6px 16px; }
+  .prompt .pbody { padding:16px 20px; font-size:14.5px; line-height:1.95; background:var(--wash); white-space:pre-wrap; margin:0; }
+  .prompt .pbody p { font-size:14.5px; line-height:1.95; margin:0; }
+  .prompt .pbody p.sp { height:12px; }
+  .prompt .pbody p.bul { padding-left:1em; text-indent:-1em; }
+  .prompt .pbody p.bul::before { content:"・"; }
+  .prompt .pafter { padding:12px 20px 14px; font-size:13px; color:#3d4148; border-top:1px solid var(--line); line-height:1.85; margin:0; }
+  .prompt .pafter b { font-size:10.5px; font-weight:700; letter-spacing:0.16em; color:var(--sub); display:block; margin-bottom:4px; }
+  .memo { border:1px solid var(--ink); margin:20px 0; }
+  .memo .mt { display:block; font-size:10.5px; font-weight:700; letter-spacing:0.16em; color:var(--sub); background:var(--wash); padding:6px 16px; border-bottom:1px solid var(--line); }
+  .memo pre { padding:16px 20px; font-family:inherit; font-size:14px; line-height:1.9; white-space:pre-wrap; }
+  .memo .mlines { padding:16px 20px; }
+  .memo .mlines p { font-size:14px; line-height:1.9; margin:0; }
+  .memo .mlines p.sp { height:14px; }
+  .memo .mlines p.bul { padding-left:1em; text-indent:-1em; }
+  .memo .mlines p.bul::before { content:"・"; }
+  .reply { border:1px solid var(--line); background:#fdfdfb; margin:20px 0; }
+  .reply .rt { display:block; font-size:10.5px; font-weight:700; letter-spacing:0.16em; color:var(--sub); padding:6px 16px; border-bottom:1px solid var(--line); }
+  .reply .rbody { padding:14px 20px; font-size:13.5px; line-height:1.9; color:#3d4148; }
+  .reply .rbody p { font-size:13.5px; margin-bottom:8px; }
+  .reply .rbody ul { padding-left:20px; margin-bottom:8px; }
+  .reply .rbody li { font-size:13.5px; }
+  .terms { border:1px solid var(--ink); margin:20px 0; }
+  .term { display:flex; border-bottom:1px solid var(--line); }
+  .term:last-child { border-bottom:none; }
+  .term dt { flex:0 0 152px; padding:14px 16px; font-size:13.5px; font-weight:700; background:var(--wash); border-right:1px solid var(--line); word-break:auto-phrase; }
+  .term dd { flex:1; padding:14px 18px; font-size:13.5px; line-height:1.85; color:#3d4148; word-break:auto-phrase; }
+  @media (max-width:520px){ .term { flex-direction:column; } .term dt { border-right:none; border-bottom:1px solid var(--line); flex-basis:auto; } }
+  .try { border:1px solid var(--ink); background:var(--wash); padding:20px 22px 16px; margin:44px 0 0; }
+  .try .tt { font-size:11px; font-weight:700; letter-spacing:0.2em; color:#fff; background:var(--black); display:inline-block; padding:3px 10px; margin-bottom:10px; }
+  .try p { font-size:14px; margin-bottom:6px; }
+  .pn { display:flex; justify-content:space-between; gap:14px; border-top:1px solid var(--ink); margin-top:56px; padding-top:20px; }
+  .pn a { font-size:13px; font-weight:700; word-break:auto-phrase; }
+  .pn .prev::before { content:"← "; }
+  .pn .next::after { content:" →"; }
+  footer { border-top:1px solid var(--line); }
+  .foot-in { max-width:720px; margin:0 auto; padding:22px 24px; display:flex; justify-content:space-between; gap:14px; font-size:11.5px; color:var(--sub); }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-in">
+    <span class="wordmark">SCHOOL STOCK</span>
+    <a class="home" href="index.html"><span class="hp">CODEX FOR TEACHERS ─ </span>目次へ</a>
+  </div>
+</div>
+
+<div class="lhead">
+  <div class="lhead-in">
+    <div class="lnum">4</div>
+    <div class="llabel">LESSON 4</div>
+    <h1>直す 整える 印刷する</h1>
+    <p class="lead">第3回で見つけた3つの直しを、そのままCodexに頼みます。直しは全部日本語です。1回で直らなかったところも隠さずお見せします。約12分です。</p>
+  </div>
+</div>
+
+<article>
+
+  <figure class="fig">
+    <img src="assets/zukai4.png" alt="できあがる3点セット。問題用紙、解答用紙、模範解答と配点表。全部Wordファイルで、手で直せる形で受け取る">
+    <figcaption>3点ともWordファイルなので、Codexに直させることも、自分の手で直すこともできます</figcaption>
+  </figure>
+
+  <div class="sec-head"><span class="sn">1</span></div>
+  <h2>直しを日本語で頼む</h2>
+
+  <div class="talk">
+    <div class="av"><img src="assets/icon-tozaki.png" alt="とざき先生"><div class="nm">とざき先生</div></div>
+    <div class="bub">第3回で見つけた3つに、問題の難しさの調整を1つ足して頼みました。大問1の(3)が「傾きと切片を答えるだけ」で易しすぎると思ったからです。これも原文のままです。</div>
+  </div>
+
+  <div class="prompt">
+    <span class="pt">Codexへの頼み方 2 ── そのまま貼って使えます</span>
+    <div class="pbody">
+<p>このフォルダにある3つのWordファイル（問題用紙・解答用紙・模範解答と配点表）を直してください。</p>
+<p class="sp"></p>
+<p class="bul">大問ごとに改ページしないでください。問題用紙は2ページに収め、解答用紙の最後の空白ページをなくす</p>
+<p class="bul">グラフの x 軸の「x」の文字が目盛りの数字と重なっているので、重ならない位置に置く</p>
+<p class="bul">大問1の(3)は、傾きと y 切片を答えるだけでは易しすぎるので、「x = 4 のときの y の値」も答えさせる問題に変える。配点は変えない</p>
+<p class="sp"></p>
+<p>直したら、変えたところを日本語で短く報告してください。</p>
+</div>
+    <p class="pafter"><b>すると何が起きるか</b>Codexが3つのファイルを読み直し、改ページとグラフの描き方を変え、問題文と模範解答と配点表の3か所を同時に書き換えます。私のときは約25分で、元のファイルは残したまま「_修正版」という名前で3つ作ってくれました。</p>
+  </div>
+
+  <div class="reply">
+    <span class="rt">Codexからの報告 ── 実際に届いた文面</span>
+    <div class="rbody">
+      <p>修正版を作成しました。</p>
+      <ul>
+        <li>問題用紙：2ページ構成に整理し、大問1(3)を変更。</li>
+        <li>解答用紙：不要な改ページ・末尾の空白ページ要因を除去し、解答欄とグラフを修正。</li>
+        <li>模範解答・配点表：新しい解答「y＝2」と採点基準を追加。合計4点は維持。</li>
+      </ul>
+      <p>全6グラフの「x」は目盛りの「6」と重ならない位置へ移動しました。構造検査とグラフ画像の目視確認は済んでいますが、環境にLibreOfficeがないためWordページ全体のレンダリング確認は未実施です。</p>
+    </div>
+  </div>
+
+  <div class="talk r">
+    <div class="av"><img src="assets/icon-haruto.png" alt="はると先生"><div class="nm">はると先生</div></div>
+    <div class="bub">問題を変えたら、模範解答と配点表も一緒に直してくれるんですね。自分でやると、どれか1つ直し忘れそうです。</div>
+  </div>
+  <div class="talk">
+    <div class="av"><img src="assets/icon-tozaki.png" alt="とざき先生"><div class="nm">とざき先生</div></div>
+    <div class="bub">3つのファイルを1つのフォルダに置いているのは、このためです。問題を1つ変えると、答えも配点表も変わる。Codexはフォルダの中の3つをまとめて見ているので、その連動を任せられます。</div>
+  </div>
+
+  <div class="sec-head"><span class="sn">2</span></div>
+  <h2>直ったところを見る</h2>
+
+  <figure class="fig">
+    <img src="assets/shot-test2-p1.png" alt="直したあとの問題用紙の1ページ目。大問1と大問2が同じページに入り、大問1の(3)に「x=4のときのyの値も求めなさい」が加わっている" loading="lazy">
+    <figcaption>直したあとの問題用紙。大問ごとの改ページがなくなり、5ページが2ページになりました。大問1の(3)に一文が加わっています</figcaption>
+  </figure>
+
+  <figure class="fig">
+    <img src="assets/shot-ans2-p2.png" alt="直したあとの解答用紙の2ページ目。座標平面の横軸の「x」が目盛りの数字の右上に離れて置かれている" loading="lazy">
+    <figcaption>座標平面の「x」が目盛りの数字から離れました。大問3のグラフも同じページに収まっています</figcaption>
+  </figure>
+
+  <div class="talk">
+    <div class="av"><img src="assets/icon-tozaki.png" alt="とざき先生"><div class="nm">とざき先生</div></div>
+    <div class="bub">もう一度、3つのファイルを全ページ開きました。問題用紙の2ページ化と、グラフの文字の重なりは直っていました。ただ、解答用紙の最後の白紙ページだけは、報告では「除去」と書いてあるのに、まだ残っていました。</div>
+  </div>
+  <div class="talk r">
+    <div class="av"><img src="assets/icon-haruto.png" alt="はると先生"><div class="nm">はると先生</div></div>
+    <div class="bub">直したと言っているのに直っていない、ということがあるんですか。</div>
+  </div>
+  <div class="talk">
+    <div class="av"><img src="assets/icon-tozaki.png" alt="とざき先生"><div class="nm">とざき先生</div></div>
+    <div class="bub">あります。Codexは自分でWordを開いて見ることができない環境だったので、ファイルの中身を直したつもりでも、Wordで開いたときの見た目までは分かりません。だから報告を読んだら、自分で開いて見る。見て残っていたら、もう一度頼む。それだけです。</div>
+  </div>
+
+  <div class="prompt">
+    <span class="pt">Codexへの頼み方 3 ── 1回で直らなかったとき</span>
+    <div class="pbody">
+<p>「中2数学_2学期中間テスト_解答用紙_修正版.docx」をWordで開くと、最後の4ページ目が白紙のまま残っています。末尾の改ページや空の段落を消して、白紙ページをなくしてください。中身は変えないでください。直したら短く報告してください。</p>
+</div>
+    <p class="pafter"><b>すると何が起きるか</b>私のときは約3分で「末尾の空段落を削除し、白紙ページが残らないよう修正しました。本文は変更していません」と返ってきました。Wordで開き直すと、解答用紙は4ページから3ページになり、白紙ページは消えていました。</p>
+  </div>
+
+  <p class="note">直しの頼み方のこつは1つだけです。「どのファイルの、どこが、どうなっている」を書く。「もっと見やすく」ではなく「4ページ目が白紙で残っている」と書くと、1回で通ります。</p>
+
+  <div class="sec-head"><span class="sn">3</span></div>
+  <h2>よく使う直しの頼み方</h2>
+
+  <div class="terms">
+    <dl>
+      <div class="term"><dt>易しくする</dt><dd>「大問4の(3)は難しすぎるので、追いつく時刻だけを聞く問題にしてください。配点はそのまま」</dd></div>
+      <div class="term"><dt>記述を足す</dt><dd>「大問3に、なぜグラフの交点が連立方程式の解になるのかを説明させる問題を1つ足してください。配点は大問3の中で調整して合計20点のまま」</dd></div>
+      <div class="term"><dt>解答欄を広げる</dt><dd>「解答用紙の大問5の(3)は説明を書く問題なので、欄を3行分に広げてください」</dd></div>
+      <div class="term"><dt>別の版を作る</dt><dd>「同じ構成で、数値だけ変えた再テスト用の版をもう1組作ってください。ファイル名の末尾に_Bをつけて」</dd></div>
+      <div class="term"><dt>自分で直す</dt><dd>Wordファイルなので、細かい言い回しは自分の手で直してかまいません。ただし問題の数値を変えたら、模範解答と配点表も自分で直します</dd></div>
+    </dl>
+  </div>
+
+  <div class="sec-head"><span class="sn">4</span></div>
+  <h2>数学以外の教科では</h2>
+
+  <div class="talk r">
+    <div class="av"><img src="assets/icon-haruto.png" alt="はると先生"><div class="nm">はると先生</div></div>
+    <div class="bub">同じ学年の国語の先生に勧めたいんですけど、範囲メモは何が変わりますか。</div>
+  </div>
+  <div class="talk">
+    <div class="av"><img src="assets/icon-tozaki.png" alt="とざき先生"><div class="nm">とざき先生</div></div>
+    <div class="bub">頼み方1はそのままで、範囲メモの3つ目「生徒の様子」に加えて、「問う力」を書きます。数学は単元名で問題が決まりますが、国語や社会は、同じ単元でも何を問うかで問題が変わるからです。</div>
+  </div>
+
+  <div class="terms">
+    <dl>
+      <div class="term"><dt>国語</dt><dd>「説明文の要旨をとらえる」「接続語の働き」「漢字の読み書き20問」のように、身につけさせたい力を書く。教科書の本文は貼らない。Codexが自分で短い文章を書いて問題にする</dd></div>
+      <div class="term"><dt>英語</dt><dd>文法事項（「be動詞の過去形」「不定詞の3用法」）と、扱った場面（「道案内」「自己紹介」）を書く。リスニングは音声が要るので、筆記の問題だけ頼む</dd></div>
+      <div class="term"><dt>社会</dt><dd>単元名と、「資料を読み取って答える問題を2つ入れる」のように問題の型を書く。資料の図表はCodexに作らせるか、自分で用意する</dd></div>
+      <div class="term"><dt>理科</dt><dd>単元名と、扱った実験名を書く。「実験の結果から考察を書かせる問題を1つ」のように型を書くと、観察・実験の観点が入る</dd></div>
+    </dl>
+  </div>
+
+  <p class="note">どの教科でも、教科書の本文・図・問題を範囲メモに写さないところは同じです。理由は第5回でお話しします。</p>
+
+  <div class="sec-head"><span class="sn">5</span></div>
+  <h2>印刷する</h2>
+
+  <div class="talk">
+    <div class="av"><img src="assets/icon-tozaki.png" alt="とざき先生"><div class="nm">とざき先生</div></div>
+    <div class="bub">仕上げは普通のWordファイルと同じです。Wordで開いて、印刷プレビューで全ページを見て、学校の印刷機で刷ります。問題用紙と解答用紙を別々に刷るので、ファイルが分かれているのが効きます。模範解答は先生の手元だけです。</div>
+  </div>
+
+  <ol class="steps">
+    <li>「_修正版」の3つのファイルをWordで開き、印刷プレビューで全ページを見る</li>
+    <li>問題用紙と解答用紙を、それぞれ人数分刷る。両面か片面かは学校の慣例に合わせる</li>
+    <li>模範解答と配点表は自分用に1部。採点前に、次回の「全問を自分で解く」をここでやる</li>
+  </ol>
+
+  <div class="try">
+    <span class="tt">やってみよう</span>
+    <p>第3回で作らせた自分のテストを全ページ開いて、直したいところを3つ書き出してください。「どのファイルの、どこが、どうなっている」の形で。それをそのままCodexに貼れば、頼み方2になります。</p>
+  </div>
+
+  <div class="pn">
+    <a class="prev" href="lesson3.html">第3回 範囲メモから作らせる</a>
+    <a class="next" href="lesson5.html">第5回 配る前に守る3つ</a>
+  </div>
+
+</article>
+
+<footer>
+  <div class="foot-in">
+    <span>© School Stock ─ はると先生は架空の先生です</span>
+    <span><a href="index.html">講座の目次へ</a></span>
+  </div>
+</footer>
+
+</body>
+</html>

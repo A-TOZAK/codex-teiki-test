@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第5回 配る前に守る3つ｜Codexで作る 中学校の定期テスト</title>
+<meta name="description" content="全問を自分で解く。教科書の文章を渡さない。生徒の情報を入れない。AIが作ったテストを自分のテストにするための線。全5回講座の第5回。">
+<style>
+  :root { --ink:#15181c; --sub:#6b7077; --accent:#2b5fd9; --paper:#fff; --wash:#f6f6f4; --line:#e6e6e3; --black:#0e0f11; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP","Yu Gothic Medium",sans-serif; background:var(--paper); color:var(--ink); line-height:2.0; letter-spacing:0.02em; -webkit-font-smoothing:antialiased; }
+  a { color:var(--accent); text-decoration:none; }
+  .topbar { background:var(--black); color:#fff; position:sticky; top:0; z-index:40; }
+  .topbar-in { max-width:720px; margin:0 auto; padding:13px 24px; display:flex; justify-content:space-between; align-items:center; gap:14px; }
+  .wordmark { font-size:12.5px; font-weight:700; letter-spacing:0.28em; color:#fff; white-space:nowrap; }
+  .topbar-in a.home { font-size:11.5px; color:#b9bcc2; letter-spacing:0.1em; white-space:nowrap; }
+  .topbar-in a.home:hover { color:#fff; }
+  @media (max-width:430px){ .topbar-in .hp { display:none; } }
+  .lhead { border-bottom:1px solid var(--ink); background:#fdfdfb; }
+  .lhead-in { max-width:720px; margin:0 auto; padding:48px 24px 40px; }
+  .lnum { font-family:Georgia,serif; font-style:italic; font-size:44px; font-weight:700; color:var(--accent); line-height:1; }
+  .llabel { font-size:11.5px; font-weight:700; letter-spacing:0.22em; color:var(--sub); margin:10px 0 8px; }
+  h1 { font-size:clamp(23px,4vw,30px); font-weight:700; line-height:1.5; word-break:auto-phrase; text-wrap:pretty; }
+  .lead { font-size:14.5px; color:#3d4148; margin-top:14px; max-width:600px; }
+  article { max-width:720px; margin:0 auto; padding:8px 24px 64px; }
+  .sec-head { display:flex; align-items:baseline; gap:13px; margin:52px 0 6px; }
+  .sec-head .sn { font-family:Georgia,serif; font-style:italic; font-size:19px; font-weight:700; color:var(--accent); }
+  h2 { font-size:20px; font-weight:700; margin:0 0 16px; word-break:auto-phrase; }
+  h3 { font-size:15.5px; font-weight:700; margin:28px 0 8px; word-break:auto-phrase; }
+  p { font-size:15px; margin-bottom:16px; }
+  .talk { display:flex; gap:13px; margin:20px 0; align-items:flex-start; }
+  .talk .av { flex:0 0 56px; text-align:center; }
+  .talk .av img { width:56px; height:56px; clip-path:circle(50%); display:block; }
+  .talk .av .nm { font-size:10px; color:var(--sub); margin-top:3px; white-space:nowrap; }
+  .talk .bub { position:relative; border:1px solid var(--ink); background:var(--paper); padding:12px 17px; font-size:14.5px; line-height:1.9; margin-top:4px; }
+  .talk .bub::before { content:""; position:absolute; top:18px; left:-8px; width:14px; height:14px; background:inherit; border-left:1px solid var(--ink); border-bottom:1px solid var(--ink); transform:rotate(45deg); }
+  .talk.r { flex-direction:row-reverse; }
+  .talk.r .bub { background:var(--wash); }
+  .talk.r .bub::before { left:auto; right:-8px; border:none; border-right:1px solid var(--ink); border-top:1px solid var(--ink); transform:rotate(45deg); }
+  .fig { border:1px solid var(--line); margin:24px 0; }
+  .fig img { display:block; width:100%; height:auto; }
+  .fig figcaption { font-size:12px; color:var(--sub); padding:9px 14px; border-top:1px solid var(--line); line-height:1.7; }
+  ol.steps { margin:0 0 16px 0; padding-left:0; list-style:none; counter-reset:step; }
+  ol.steps li { position:relative; padding:0 0 14px 44px; counter-increment:step; font-size:14.5px; }
+  ol.steps li::before { content:counter(step); position:absolute; left:0; top:4px; width:28px; height:28px; border:1px solid var(--ink); display:flex; align-items:center; justify-content:center; font-family:Georgia,serif; font-style:italic; font-weight:700; font-size:14px; color:var(--accent); }
+  .note { border-left:3px solid var(--accent); background:var(--wash); padding:16px 20px; font-size:13.5px; line-height:1.9; margin:20px 0; }
+  .warn { border-left:3px solid var(--black); background:var(--wash); padding:16px 20px; font-size:13.5px; line-height:1.9; margin:20px 0; }
+  .warn b { display:block; font-size:11px; letter-spacing:0.2em; color:var(--sub); margin-bottom:6px; }
+  .prompt { border:1px solid var(--ink); margin:20px 0; }
+  .prompt .pt { display:block; font-size:10.5px; font-weight:700; letter-spacing:0.16em; color:#fff; background:var(--black); padding:6px 16px; }
+  .prompt .pbody { padding:16px 20px; font-size:14.5px; line-height:1.95; background:var(--wash); white-space:pre-wrap; margin:0; }
+  .prompt .pafter { padding:12px 20px 14px; font-size:13px; color:#3d4148; border-top:1px solid var(--line); line-height:1.85; margin:0; }
+  .prompt .pafter b { font-size:10.5px; font-weight:700; letter-spacing:0.16em; color:var(--sub); display:block; margin-bottom:4px; }
+  .memo { border:1px solid var(--ink); margin:20px 0; }
+  .memo .mt { display:block; font-size:10.5px; font-weight:700; letter-spacing:0.16em; color:var(--sub); background:var(--wash); padding:6px 16px; border-bottom:1px solid var(--line); }
+  .memo pre { padding:16px 20px; font-family:inherit; font-size:14px; line-height:1.9; white-space:pre-wrap; }
+  .reply { border:1px solid var(--line); background:#fdfdfb; margin:20px 0; }
+  .reply .rt { display:block; font-size:10.5px; font-weight:700; letter-spacing:0.16em; color:var(--sub); padding:6px 16px; border-bottom:1px solid var(--line); }
+  .reply .rbody { padding:14px 20px; font-size:13.5px; line-height:1.9; color:#3d4148; }
+  .reply .rbody p { font-size:13.5px; margin-bottom:8px; }
+  .reply .rbody ul { padding-left:20px; margin-bottom:8px; }
+  .reply .rbody li { font-size:13.5px; }
+  .terms { border:1px solid var(--ink); margin:20px 0; }
+  .term { display:flex; border-bottom:1px solid var(--line); }
+  .term:last-child { border-bottom:none; }
+  .term dt { flex:0 0 152px; padding:14px 16px; font-size:13.5px; font-weight:700; background:var(--wash); border-right:1px solid var(--line); word-break:auto-phrase; }
+  .term dd { flex:1; padding:14px 18px; font-size:13.5px; line-height:1.85; color:#3d4148; word-break:auto-phrase; }
+  @media (max-width:520px){ .term { flex-direction:column; } .term dt { border-right:none; border-bottom:1px solid var(--line); flex-basis:auto; } }
+  .try { border:1px solid var(--ink); background:var(--wash); padding:20px 22px 16px; margin:44px 0 0; }
+  .try .tt { font-size:11px; font-weight:700; letter-spacing:0.2em; color:#fff; background:var(--black); display:inline-block; padding:3px 10px; margin-bottom:10px; }
+  .try p { font-size:14px; margin-bottom:6px; }
+  .pn { display:flex; justify-content:space-between; gap:14px; border-top:1px solid var(--ink); margin-top:56px; padding-top:20px; }
+  .pn a { font-size:13px; font-weight:700; word-break:auto-phrase; }
+  .pn .prev::before { content:"← "; }
+  .pn .next::after { content:" →"; }
+  footer { border-top:1px solid var(--line); }
+  .foot-in { max-width:720px; margin:0 auto; padding:22px 24px; display:flex; justify-content:space-between; gap:14px; font-size:11.5px; color:var(--sub); }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-in">
+    <span class="wordmark">SCHOOL STOCK</span>
+    <a class="home" href="index.html"><span class="hp">CODEX FOR TEACHERS ─ </span>目次へ</a>
+  </div>
+</div>
+
+<div class="lhead">
+  <div class="lhead-in">
+    <div class="lnum">5</div>
+    <div class="llabel">LESSON 5</div>
+    <h1>配る前に守る3つ</h1>
+    <p class="lead">最終回は、AIが作ったテストを自分のテストにするための線です。私が毎回通している3つを、そのままお渡しします。約10分です。</p>
+  </div>
+</div>
+
+<article>
+
+  <figure class="fig">
+    <img src="assets/zukai5.png" alt="配る前に守る3つ。全問を自分で解く。教科書の文章を渡さない。生徒の情報を入れない">
+    <figcaption>この3つを通したテストだけを配ります</figcaption>
+  </figure>
+
+  <div class="sec-head"><span class="sn">1</span></div>
+  <h2>全問を自分で解く</h2>
+
+  <div class="talk r">
+    <div class="av"><img src="assets/icon-haruto.png" alt="はると先生"><div class="nm">はると先生</div></div>
+    <div class="bub">模範解答までCodexが作ってくれるなら、それを信じて配ってもいいんじゃないですか。</div>
+  </div>
+  <div class="talk">
+    <div class="av"><img src="assets/icon-tozaki.png" alt="とざき先生"><div class="nm">とざき先生</div></div>
+    <div class="bub">ここだけは譲りません。AIの答えは間違うことがあります。計算そのものより、問題文の条件と答えが食い違っている、配点の合計が100点にならない、という形で出ます。配る前に、解答用紙に自分の字で全問解きます。50分のテストなら、先生が解くのに20分です。</div>
+  </div>
+  <div class="talk">
+    <div class="av"><img src="assets/icon-tozaki.png" alt="とざき先生"><div class="nm">とざき先生</div></div>
+    <div class="bub">自分で解く前に、Codexにも検算させておくと、間違いの多くはそこで消えます。頼み方はこれです。</div>
+  </div>
+
+  <div class="prompt">
+    <span class="pt">Codexへの頼み方 ── そのまま貼って使えます</span>
+    <p class="pbody">模範解答の全問を、最初に解いたのとは別の方法でもう一度解いて、答えが一致するか確かめてください。一致しない問題があれば、問題文と模範解答のどちらを直すべきかを日本語で説明してから直してください。配点の合計が100点になっているかも確かめてください。</p>
+    <p class="pafter"><b>すると何が起きるか</b>Codexが全問を解き直し、一致したかどうかを報告してきます。私が見本のテストで頼んだときに届いた報告がこれです。</p>
+  </div>
+
+  <div class="reply">
+    <span class="rt">Codexからの報告 ── 実際に届いた文面（見本のテスト）</span>
+    <div class="rbody">
+      <p>全20問を別解で再検算し、答えはすべて一致しました。</p>
+      <p>大問5は「実際の水量が89 L」と読める点だけ不正確でした。問題文には式の適用範囲を追加し、模範解答では89 Lを正味流入量から得た量として表現し直しました。</p>
+      <p>配点は各大問20点、合計100点（60点＋40点）です。</p>
+    </div>
+  </div>
+
+  <div class="talk r">
+    <div class="av"><img src="assets/icon-haruto.png" alt="はると先生"><div class="nm">はると先生</div></div>
+    <div class="bub">答えは全部合っていたのに、直したところがあるんですね。</div>
+  </div>
+  <div class="talk">
+    <div class="av"><img src="assets/icon-tozaki.png" alt="とざき先生"><div class="nm">とざき先生</div></div>
+    <div class="bub">大問5は、容量84Lの水そうに13分後に「89L入っている」と模範解答に書いてありました。計算としては合っていますが、水そうには84Lしか入りません。あふれる量を出す途中の数として書き直してくれました。私も自分で解いたときに気づいていなかったところです。答えの数字だけでなく、こういう言い回しも検算で拾えます。</div>
+  </div>
+
+  <p class="note">検算させたあとでも、自分で解く手順は省きません。AIに検算させるのは、自分が解くときに見つける間違いを減らすためで、自分が解く代わりではありません。</p>
+
+  <div class="sec-head"><span class="sn">2</span></div>
+  <h2>教科書の文章を渡さない</h2>
+
+  <div class="talk r">
+    <div class="av"><img src="assets/icon-haruto.png" alt="はると先生"><div class="nm">はると先生</div></div>
+    <div class="bub">第1回で、教科書の本文を貼って作らせないと言っていましたよね。国語だと、本文がないと問題が作れない気がするんですが。</div>
+  </div>
+  <div class="talk">
+    <div class="av"><img src="assets/icon-tozaki.png" alt="とざき先生"><div class="nm">とざき先生</div></div>
+    <div class="bub">教科書の本文や図は、出版社と作者のものです。授業で使うのと、AIに写して渡すのは別の話なので、私はAIに教科書の文章を渡していません。範囲メモに書くのは、単元名と、自分の言葉で書いた学習内容だけです。</div>
+  </div>
+  <div class="talk">
+    <div class="av"><img src="assets/icon-tozaki.png" alt="とざき先生"><div class="nm">とざき先生</div></div>
+    <div class="bub">国語なら「説明文の要旨をとらえる問題」「接続語の働きを問う問題」のように、身につけさせたい力を書きます。すると、Codexは自分で短い文章を書いて、それをもとに問題を作ります。教科書の本文で出したい問題は、先生が自分で作って足せばいいんです。テストの全部をAIで作る必要はありません。</div>
+  </div>
+
+  <div class="terms">
+    <dl>
+      <div class="term"><dt>渡してよいもの</dt><dd>単元名。自分の言葉で書いた学習内容と生徒の様子。自分で作った過去のテストや問題（自作のもの）。</dd></div>
+      <div class="term"><dt>渡さないもの</dt><dd>教科書の本文・図・問題。市販の問題集やテストの問題。出版社のPDFやスキャン。</dd></div>
+    </dl>
+  </div>
+
+  <div class="talk r">
+    <div class="av"><img src="assets/icon-haruto.png" alt="はると先生"><div class="nm">はると先生</div></div>
+    <div class="bub">できあがったテストは、学校で配っても大丈夫なんですよね。</div>
+  </div>
+  <div class="talk">
+    <div class="av"><img src="assets/icon-tozaki.png" alt="とざき先生"><div class="nm">とざき先生</div></div>
+    <div class="bub">範囲メモが自分の言葉だけなら、できあがったテストは自作のテストです。授業で配るぶんには、私はそう考えて使っています。学校の外で公開したり配ったりするときは、別の判断が要るので、そのときは管理職に相談します。</div>
+  </div>
+
+  <div class="sec-head"><span class="sn">3</span></div>
+  <h2>生徒の情報を入れない</h2>
+
+  <div class="talk">
+    <div class="av"><img src="assets/icon-tozaki.png" alt="とざき先生"><div class="nm">とざき先生</div></div>
+    <div class="bub">3つ目は、生徒の名前・点数・答案を、Codexに渡さないことです。第2回でフォルダを空にして始めたのは、このためです。フォルダに名簿のファイルを入れなければ、Codexが読むこともありません。</div>
+  </div>
+  <div class="talk r">
+    <div class="av"><img src="assets/icon-haruto.png" alt="はると先生"><div class="nm">はると先生</div></div>
+    <div class="bub">範囲メモに「◯◯さんが苦手」と書くのもだめですか。</div>
+  </div>
+  <div class="talk">
+    <div class="av"><img src="assets/icon-tozaki.png" alt="とざき先生"><div class="nm">とざき先生</div></div>
+    <div class="bub">名前は書きません。「2点から式を求めるところでつまずく子が多い」のように、クラスの様子として書けば足ります。それで問題の作り方は十分に変わります。</div>
+  </div>
+
+  <ol class="steps">
+    <li>フォルダに入れるのは範囲メモだけ。名簿・答案・成績のファイルは入れない</li>
+    <li>範囲メモに生徒の名前を書かない。様子はクラス全体のこととして書く</li>
+    <li>学校や教育委員会のAIの決まりを、先に確かめておく</li>
+  </ol>
+
+  <p class="note">テストは学年で同じものを使う学校が多いと思います。教科会に出すときは「AIで下書きを作り、自分で全問解いて確かめた」と伝えるようにしています。作り方を隠さないほうが、同じ教科の先生に安心して使ってもらえます。</p>
+
+  <div class="sec-head"><span class="sn">4</span></div>
+  <h2>5回のまとめ</h2>
+
+  <div class="talk">
+    <div class="av"><img src="assets/icon-tozaki.png" alt="とざき先生"><div class="nm">とざき先生</div></div>
+    <div class="bub">先生が自分の手でやるのは「範囲を決める」と「全問を解いて確かめる」の2つ。あいだの「作る・整える・直す」はCodexに日本語で頼む。渡すのは自分の言葉だけで、教科書の文章と生徒の情報は渡さない。これで全部です。</div>
+  </div>
+  <div class="talk r">
+    <div class="av"><img src="assets/icon-haruto.png" alt="はると先生"><div class="nm">はると先生</div></div>
+    <div class="bub">次の中間テストで、まず範囲メモから書いてみます。</div>
+  </div>
+
+  <div class="try">
+    <span class="tt">やってみよう</span>
+    <p>第3回で作らせた見本の模範解答を1問、自分で解いてみてください。答えが合っていれば、それが「解いて確かめる」の手順そのものです。次は自分の範囲メモで、同じことを1本通してみましょう。</p>
+  </div>
+
+  <div class="pn">
+    <a class="prev" href="lesson4.html">第4回 直す 整える 印刷する</a>
+    <a class="next" href="index.html">講座の目次</a>
+  </div>
+
+</article>
+
+<footer>
+  <div class="foot-in">
+    <span>© School Stock ─ はると先生は架空の先生です</span>
+    <span><a href="index.html">講座の目次へ</a></span>
+  </div>
+</footer>
+
+</body>
+</html>

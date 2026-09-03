@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第1回 定期テストのどこをCodexに任せるか｜Codexで作る 中学校の定期テスト</title>
+<meta name="description" content="テスト作りを6つの工程に分け、Codexに任せる3つと先生がやる3つを決める。チャットのAIとCodexの違い。全5回講座の第1回。">
+<style>
+  :root { --ink:#15181c; --sub:#6b7077; --accent:#2b5fd9; --paper:#fff; --wash:#f6f6f4; --line:#e6e6e3; --black:#0e0f11; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP","Yu Gothic Medium",sans-serif; background:var(--paper); color:var(--ink); line-height:2.0; letter-spacing:0.02em; -webkit-font-smoothing:antialiased; }
+  a { color:var(--accent); text-decoration:none; }
+  .topbar { background:var(--black); color:#fff; position:sticky; top:0; z-index:40; }
+  .topbar-in { max-width:720px; margin:0 auto; padding:13px 24px; display:flex; justify-content:space-between; align-items:center; gap:14px; }
+  .wordmark { font-size:12.5px; font-weight:700; letter-spacing:0.28em; color:#fff; white-space:nowrap; }
+  .topbar-in a.home { font-size:11.5px; color:#b9bcc2; letter-spacing:0.1em; white-space:nowrap; }
+  .topbar-in a.home:hover { color:#fff; }
+  @media (max-width:430px){ .topbar-in .hp { display:none; } }
+  .lhead { border-bottom:1px solid var(--ink); background:#fdfdfb; }
+  .lhead-in { max-width:720px; margin:0 auto; padding:48px 24px 40px; }
+  .lnum { font-family:Georgia,serif; font-style:italic; font-size:44px; font-weight:700; color:var(--accent); line-height:1; }
+  .llabel { font-size:11.5px; font-weight:700; letter-spacing:0.22em; color:var(--sub); margin:10px 0 8px; }
+  h1 { font-size:clamp(23px,4vw,30px); font-weight:700; line-height:1.5; word-break:auto-phrase; text-wrap:pretty; }
+  .lead { font-size:14.5px; color:#3d4148; margin-top:14px; max-width:600px; }
+  article { max-width:720px; margin:0 auto; padding:8px 24px 64px; }
+  .sec-head { display:flex; align-items:baseline; gap:13px; margin:52px 0 6px; }
+  .sec-head .sn { font-family:Georgia,serif; font-style:italic; font-size:19px; font-weight:700; color:var(--accent); }
+  h2 { font-size:20px; font-weight:700; margin:0 0 16px; word-break:auto-phrase; }
+  h3 { font-size:15.5px; font-weight:700; margin:28px 0 8px; word-break:auto-phrase; }
+  p { font-size:15px; margin-bottom:16px; }
+  .talk { display:flex; gap:13px; margin:20px 0; align-items:flex-start; }
+  .talk .av { flex:0 0 56px; text-align:center; }
+  .talk .av img { width:56px; height:56px; clip-path:circle(50%); display:block; }
+  .talk .av .nm { font-size:10px; color:var(--sub); margin-top:3px; white-space:nowrap; }
+  .talk .bub { position:relative; border:1px solid var(--ink); background:var(--paper); padding:12px 17px; font-size:14.5px; line-height:1.9; margin-top:4px; }
+  .talk .bub::before { content:""; position:absolute; top:18px; left:-8px; width:14px; height:14px; background:inherit; border-left:1px solid var(--ink); border-bottom:1px solid var(--ink); transform:rotate(45deg); }
+  .talk.r { flex-direction:row-reverse; }
+  .talk.r .bub { background:var(--wash); }
+  .talk.r .bub::before { left:auto; right:-8px; border:none; border-right:1px solid var(--ink); border-top:1px solid var(--ink); transform:rotate(45deg); }
+  .fig { border:1px solid var(--line); margin:24px 0; }
+  .fig img { display:block; width:100%; height:auto; }
+  .fig figcaption { font-size:12px; color:var(--sub); padding:9px 14px; border-top:1px solid var(--line); line-height:1.7; }
+  ol.steps { margin:0 0 16px 0; padding-left:0; list-style:none; counter-reset:step; }
+  ol.steps li { position:relative; padding:0 0 14px 44px; counter-increment:step; font-size:14.5px; }
+  ol.steps li::before { content:counter(step); position:absolute; left:0; top:4px; width:28px; height:28px; border:1px solid var(--ink); display:flex; align-items:center; justify-content:center; font-family:Georgia,serif; font-style:italic; font-weight:700; font-size:14px; color:var(--accent); }
+  .note { border-left:3px solid var(--accent); background:var(--wash); padding:16px 20px; font-size:13.5px; line-height:1.9; margin:20px 0; }
+  .warn { border-left:3px solid var(--black); background:var(--wash); padding:16px 20px; font-size:13.5px; line-height:1.9; margin:20px 0; }
+  .warn b { display:block; font-size:11px; letter-spacing:0.2em; color:var(--sub); margin-bottom:6px; }
+  .prompt { border:1px solid var(--ink); margin:20px 0; }
+  .prompt .pt { display:block; font-size:10.5px; font-weight:700; letter-spacing:0.16em; color:#fff; background:var(--black); padding:6px 16px; }
+  .prompt .pbody { padding:16px 20px; font-size:14.5px; line-height:1.95; background:var(--wash); white-space:pre-wrap; margin:0; }
+  .prompt .pafter { padding:12px 20px 14px; font-size:13px; color:#3d4148; border-top:1px solid var(--line); line-height:1.85; margin:0; }
+  .prompt .pafter b { font-size:10.5px; font-weight:700; letter-spacing:0.16em; color:var(--sub); display:block; margin-bottom:4px; }
+  .memo { border:1px solid var(--ink); margin:20px 0; }
+  .memo .mt { display:block; font-size:10.5px; font-weight:700; letter-spacing:0.16em; color:var(--sub); background:var(--wash); padding:6px 16px; border-bottom:1px solid var(--line); }
+  .memo pre { padding:16px 20px; font-family:inherit; font-size:14px; line-height:1.9; white-space:pre-wrap; }
+  .reply { border:1px solid var(--line); background:#fdfdfb; margin:20px 0; }
+  .reply .rt { display:block; font-size:10.5px; font-weight:700; letter-spacing:0.16em; color:var(--sub); padding:6px 16px; border-bottom:1px solid var(--line); }
+  .reply .rbody { padding:14px 20px; font-size:13.5px; line-height:1.9; color:#3d4148; }
+  .reply .rbody p { font-size:13.5px; margin-bottom:8px; }
+  .reply .rbody ul { padding-left:20px; margin-bottom:8px; }
+  .reply .rbody li { font-size:13.5px; }
+  .terms { border:1px solid var(--ink); margin:20px 0; }
+  .term { display:flex; border-bottom:1px solid var(--line); }
+  .term:last-child { border-bottom:none; }
+  .term dt { flex:0 0 152px; padding:14px 16px; font-size:13.5px; font-weight:700; background:var(--wash); border-right:1px solid var(--line); word-break:auto-phrase; }
+  .term dd { flex:1; padding:14px 18px; font-size:13.5px; line-height:1.85; color:#3d4148; word-break:auto-phrase; }
+  @media (max-width:520px){ .term { flex-direction:column; } .term dt { border-right:none; border-bottom:1px solid var(--line); flex-basis:auto; } }
+  .try { border:1px solid var(--ink); background:var(--wash); padding:20px 22px 16px; margin:44px 0 0; }
+  .try .tt { font-size:11px; font-weight:700; letter-spacing:0.2em; color:#fff; background:var(--black); display:inline-block; padding:3px 10px; margin-bottom:10px; }
+  .try p { font-size:14px; margin-bottom:6px; }
+  .pn { display:flex; justify-content:space-between; gap:14px; border-top:1px solid var(--ink); margin-top:56px; padding-top:20px; }
+  .pn a { font-size:13px; font-weight:700; word-break:auto-phrase; }
+  .pn .prev::before { content:"← "; }
+  .pn .next::after { content:" →"; }
+  footer { border-top:1px solid var(--line); }
+  .foot-in { max-width:720px; margin:0 auto; padding:22px 24px; display:flex; justify-content:space-between; gap:14px; font-size:11.5px; color:var(--sub); }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-in">
+    <span class="wordmark">SCHOOL STOCK</span>
+    <a class="home" href="index.html"><span class="hp">CODEX FOR TEACHERS ─ </span>目次へ</a>
+  </div>
+</div>
+
+<div class="lhead">
+  <div class="lhead-in">
+    <div class="lnum">1</div>
+    <div class="llabel">LESSON 1</div>
+    <h1>定期テストのどこをCodexに任せるか</h1>
+    <p class="lead">この回は読むだけです。AIで教材を作っているとざき先生と、中学校で数学を教えて2年目のはると先生の対話で進めます。約10分です。</p>
+  </div>
+</div>
+
+<article>
+
+  <div class="sec-head"><span class="sn">1</span></div>
+  <h2>テスト作りを6つに分ける</h2>
+
+  <div class="talk r">
+    <div class="av"><img src="assets/icon-haruto.png" alt="はると先生"><div class="nm">はると先生</div></div>
+    <div class="bub">定期テストって、AIに全部任せていいものなんですか。作らせたことはあるんですけど、そのまま配るのはさすがに怖くて。</div>
+  </div>
+  <div class="talk">
+    <div class="av"><img src="assets/icon-tozaki.png" alt="とざき先生"><div class="nm">とざき先生</div></div>
+    <div class="bub">全部は任せません。テスト作りを6つの工程に分けると、任せるのは真ん中の3つです。両端は先生にしかできない仕事です。</div>
+  </div>
+
+  <figure class="fig">
+    <img src="assets/zukai1.png" alt="定期テスト作りの6工程。範囲を決める（先生）、問題を作る（Codex）、解答と配点（Codex）、Wordに整える（Codex）、解いて確かめる（先生）、印刷して配る（先生）">
+    <figcaption>青の3つをCodexに頼み、白の3つは先生がやります</figcaption>
+  </figure>
+
+  <div class="talk">
+    <div class="av"><img src="assets/icon-tozaki.png" alt="とざき先生"><div class="nm">とざき先生</div></div>
+    <div class="bub">最初の「範囲を決める」は、授業をした先生にしか分かりません。どこまで進んだか、どこでつまずいている子が多いか。最後の「解いて確かめる」も同じで、AIの答えは間違うことがあるので、配る前に自分で全問解きます。この2つを手放さなければ、あとの3つは安心して任せられます。</div>
+  </div>
+  <div class="talk r">
+    <div class="av"><img src="assets/icon-haruto.png" alt="はると先生"><div class="nm">はると先生</div></div>
+    <div class="bub">問題を考える時間より、Wordに打ち込んで解答用紙を作る時間のほうが長いんですよね。そこを任せられるだけでも助かります。</div>
+  </div>
+
+  <div class="sec-head"><span class="sn">2</span></div>
+  <h2>チャットのAIとCodexの違い</h2>
+
+  <div class="talk r">
+    <div class="av"><img src="assets/icon-haruto.png" alt="はると先生"><div class="nm">はると先生</div></div>
+    <div class="bub">ChatGPTでも問題は作れますよね。Codexだと何が違うんですか。</div>
+  </div>
+  <div class="talk">
+    <div class="av"><img src="assets/icon-tozaki.png" alt="とざき先生"><div class="nm">とざき先生</div></div>
+    <div class="bub">チャット画面のAIは、文章を返してくれるところまでです。そこからWordに貼って、体裁を整えて、解答用紙を別に作るのは自分の手になります。Codexは、パソコンの中の指定したフォルダで、ファイルそのものを作ってくれます。問題用紙・解答用紙・模範解答の3つのWordファイルが、フォルダの中にできあがります。</div>
+  </div>
+
+  <div class="terms">
+    <dl>
+      <div class="term"><dt>チャットのAI</dt><dd>ChatGPTやGeminiのチャット画面。質問すると文章で答える。問題文を作ってもらい、自分でWordに貼って整える。</dd></div>
+      <div class="term"><dt>Codex</dt><dd>OpenAI社のAIで、ChatGPTの有料プランに含まれる。指定したフォルダの中でファイルを作ったり直したりする。Wordファイルを3つ作り、間違いを見つけたら日本語で頼んで直させる。</dd></div>
+    </dl>
+  </div>
+
+  <div class="talk">
+    <div class="av"><img src="assets/icon-tozaki.png" alt="とざき先生"><div class="nm">とざき先生</div></div>
+    <div class="bub">もう1つ大事な違いがあります。Codexは、指定したフォルダの外には手を出しません。テスト用のフォルダを1つ作って、そこだけで仕事をさせます。だから、そのフォルダに名簿や答案を入れなければ、生徒の情報がAIに渡ることもありません。</div>
+  </div>
+
+  <div class="sec-head"><span class="sn">3</span></div>
+  <h2>問題の質は範囲メモで決まる</h2>
+
+  <div class="talk r">
+    <div class="av"><img src="assets/icon-haruto.png" alt="はると先生"><div class="nm">はると先生</div></div>
+    <div class="bub">「中2の一次関数のテストを作って」と頼むだけじゃだめですか。</div>
+  </div>
+  <div class="talk">
+    <div class="av"><img src="assets/icon-tozaki.png" alt="とざき先生"><div class="nm">とざき先生</div></div>
+    <div class="bub">それでもテストらしいものは出てきます。でも、それは「どこかの中2」のテストです。自分のクラスのテストにするために、範囲メモを1枚書きます。どの単元をどこまでやったか。生徒がどこでつまずいているか。数行でかまいません。この数行があるかないかで、出てくる問題がまるで変わります。</div>
+  </div>
+
+  <p class="note">私が範囲メモに必ず書くのは3つです。①単元名を自分の言葉で ②授業で扱った内容の範囲 ③生徒のつまずき。とくに③を書くと、Codexはそこを確かめる問題を厚めに作ってくれます。書き方は第2回で、実際のメモをそのままお見せします。</p>
+
+  <div class="sec-head"><span class="sn">4</span></div>
+  <h2>この講座で作るもの</h2>
+
+  <div class="talk">
+    <div class="av"><img src="assets/icon-tozaki.png" alt="とざき先生"><div class="nm">とざき先生</div></div>
+    <div class="bub">見本は、中学2年 数学の2学期中間テストにします。範囲は一次関数。50分・100点満点で、前半が知識・技能、後半が思考・判断・表現の問題です。第3回で、頼んだ言葉の原文から、Codexの返事、できあがったWordファイルまで、1本まるごとお見せします。</div>
+  </div>
+  <div class="talk r">
+    <div class="av"><img src="assets/icon-haruto.png" alt="はると先生"><div class="nm">はると先生</div></div>
+    <div class="bub">数学以外の教科でも同じ手順でいけますか。</div>
+  </div>
+  <div class="talk">
+    <div class="av"><img src="assets/icon-tozaki.png" alt="とざき先生"><div class="nm">とざき先生</div></div>
+    <div class="bub">手順は同じです。変わるのは範囲メモの書き方だけで、そこは第4回で触れます。ただし1つだけ先に言っておくと、国語や英語で教科書の本文を貼って「これで問題を作って」とは頼みません。理由は第5回でお話しします。</div>
+  </div>
+
+  <div class="try">
+    <span class="tt">やってみよう</span>
+    <p>次の定期テストの範囲を、紙に3行で書き出してください。単元名、授業でやった範囲、生徒がつまずいているところ。次回、この3行が範囲メモになります。</p>
+  </div>
+
+  <div class="pn">
+    <a class="prev" href="index.html">講座の目次</a>
+    <a class="next" href="lesson2.html">第2回 準備 Codexと範囲メモ</a>
+  </div>
+
+</article>
+
+<footer>
+  <div class="foot-in">
+    <span>© School Stock ─ はると先生は架空の先生です</span>
+    <span><a href="index.html">講座の目次へ</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
